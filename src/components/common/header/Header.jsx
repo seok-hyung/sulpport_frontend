@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { styled, keyframes } from 'styled-components';
 
 const Header = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const navigate = useNavigate();
   const openModal = () => {
     setIsModalOpen(true);
   };
@@ -17,9 +19,16 @@ const Header = () => {
         <ul className="leftUl">
           <li className="firstLi">설포트</li>
           <li className="lastLi">선물/용돈 추천</li>
-          <li className="lastLi">덕담 추천</li>
+          <li
+            className="lastLi"
+            onClick={() => {
+              navigate('/blessing');
+            }}
+          >
+            덕담 추천
+          </li>
           <li className="lastLi">설날 상식백과</li>
-          <li className="lastLi">서비스 추천하기</li>
+          <li className="lastLi">서비스 추천</li>
           <li className="lastLi">About us</li>
         </ul>
         <ul className="rightUl">
@@ -50,7 +59,7 @@ const Header = () => {
           </Icons>
           <ul>
             <li>선물/용돈 추천</li>
-            <li>덕담 가이드</li>
+            <li>덕담 추천</li>
             <li>설날 상식백과</li>
             <hr />
             <li>서비스 추천하기</li>
@@ -79,7 +88,6 @@ const HeaderWrapper = styled.nav`
   }
   .leftUl {
     width: 80%;
-    margin-left: 15px;
     display: flex;
     padding: 16px 28px;
     .firstLi {
@@ -96,12 +104,13 @@ const HeaderWrapper = styled.nav`
       display: flex;
       justify-content: center;
       align-items: center;
-      width: 10%;
+      width: 11%;
       height: 45px;
       margin: auto 0;
       margin-right: 25px;
       border: 1px solid black;
       min-width: fit-content;
+      cursor: pointer;
     }
     @media (max-width: 800px) {
       .firstLi {
