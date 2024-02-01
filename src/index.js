@@ -4,11 +4,14 @@ import { createRoot } from 'react-dom/client';
 import App from './App';
 import { BrowserRouter } from 'react-router-dom';
 import Globalstyled from './styles/Globalstyled';
+import { RecoilRoot } from 'recoil';
 const container = document.getElementById('root');
 const root = createRoot(container);
 root.render(
-  <BrowserRouter>
-    <Globalstyled />
-    <App />
-  </BrowserRouter>,
+  <RecoilRoot>
+    <BrowserRouter>
+      <Globalstyled />
+      <App />
+    </BrowserRouter>,
+  </RecoilRoot>
 );

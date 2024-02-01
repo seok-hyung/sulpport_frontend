@@ -14,3 +14,9 @@ export const blessingToneState = atom({
   default: '',
   effects_UNSTABLE: [persistAtom],
 });
+
+export const blessingRelationState = atom({
+  key: 'blessingRelationState',
+  default: '',
+  effects_UNSTABLE: [persistAtom],
+});
