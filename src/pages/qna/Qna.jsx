@@ -10,7 +10,7 @@ const NavigationButtons = ({
   return (
     <ButtonContainer question={question}>
       {question !== 1 && (
-        <button onClick={previousQuestion}>
+        <button onClick={previousQuestion} className="previousBtn">
           <img src="/assets/arrow-left-orange-icon.svg" alt="왼쪽 화살표" />
           <p>이전으로</p>
         </button>
@@ -120,7 +120,7 @@ const Qna = () => {
 
       {question === 3 && (
         <div>
-          <p>상대방과의 관계는?</p>
+          <p>상대방(와)과의 관계는?</p>
           <select>
             <option value="부모">부모</option>
             <option value="자녀">자녀</option>
@@ -275,7 +275,7 @@ const ButtonContainer = styled.div`
       width: 60px;
     }
   }
-  button:first-of-type {
+  .previousBtn {
     opacity: 0.5;
   }
   button[disabled] {
