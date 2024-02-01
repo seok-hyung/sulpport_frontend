@@ -67,7 +67,7 @@ const CarouselContent = styled.div`
   height: 300px;
   position: absolute;
   background-color: ${(props) => props.bgColor};
-  padding: 20px;
+  padding: 40px;
   box-sizing: border-box;
   transition: transform ease-out 0.5s;
   transform: ${(props) =>
