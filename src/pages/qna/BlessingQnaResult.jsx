@@ -36,6 +36,7 @@ const BlessingQnaResult = () => {
       <ChatBox>
         {chat.map((msg, index) => (
           <div key={index}>{msg}</div>
+          // 예시
         ))}
       </ChatBox>
       <FoldableArea isFolded={isFolded}>
@@ -174,7 +175,7 @@ const FoldBar = styled.div`
   left: 430px;
   width: 100px;
   height: 10px;
-  margin: 15px auto;
+  margin: 20px auto;
   border-radius: 10px;
   background-color: #dccfcd;
   margin-bottom: 30px;
