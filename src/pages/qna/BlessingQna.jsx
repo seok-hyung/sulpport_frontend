@@ -1,43 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { styled } from 'styled-components';
-// import { blessingNameState, blessingRelationState } from '../../atoms/Atoms';
-// import { CSSTransition, TransitionGroup } from 'react-transition-group';
-const NavigationButtons = ({
-  previousQuestion,
-  nextQuestion,
-  isNextDisabled,
-  question,
-  nextButtonClassName,
-  nextButtonText,
-  nextButtonIcon,
-}) => {
-  return (
-    <ButtonContainer question={question}>
-      {question !== 1 && (
-        <button onClick={previousQuestion} className="previousBtn">
-          <img src="/assets/arrow-left-orange-icon.svg" alt="왼쪽 화살표" />
-          <p>이전으로</p>
-        </button>
-      )}
-      <button
-        onClick={nextQuestion}
-        disabled={isNextDisabled}
-        className={nextButtonClassName}
-      >
-        <p>{nextButtonText || '다음으로'}</p>
-        <img
-          src={nextButtonIcon || '/assets/arrow-right-orange-icon.svg'}
-          alt="오른쪽 화살표"
-        />
-      </button>
-    </ButtonContainer>
-  );
-};
+import NavBtns from '../../components/common/navBtns/NavBtns';
+import { useNavigate } from 'react-router-dom';
 
-const Qna = () => {
+const BlessingQna = () => {
+  const navigate = useNavigate();
   //q1
   const [question, setQuestion] = useState(1);
-  const [progress, setProgress] = useState(0);
+  console.log(question);
+  const [progress, setProgress] = useState(20);
   const [name, setName] = useState('');
   const handleInputChange = (e) => {
     setName(e.target.value);
@@ -51,10 +22,14 @@ const Qna = () => {
     }
   };
   const nextQuestion = () => {
-    if (progress < 100) {
-      setProgress(progress + 20);
+    if (question === 6) {
+      setTimeout(() => {
+        setQuestion(question + 1);
+      }, 4000);
+    } else {
       setQuestion(question + 1);
     }
+    setProgress(progress + 20);
   };
 
   //q2
@@ -113,15 +88,21 @@ const Qna = () => {
     // 제출 처리 코드
     // 처리가 끝나면 setIsLoading(false)
   };
+  //q7
+  const goToQnaResult = () => {
+    navigate('/blessingQnaResult');
+  };
   return (
     <QnaWrapper>
       <header>
         <img src="/assets/blessingTxtOrange.svg" alt="" />
       </header>
 
-      <ProgressBar progress={progress}>
-        <div className="progress"></div>
-      </ProgressBar>
+      {progress <= 100 && (
+        <ProgressBar progress={progress}>
+          <div className="progress"></div>
+        </ProgressBar>
+      )}
 
       {question === 1 && (
         <>
@@ -139,7 +120,7 @@ const Qna = () => {
               </small>
             </div>
           </div>
-          <NavigationButtons
+          <NavBtns
             previousQuestion={previousQuestion}
             nextQuestion={nextQuestion}
             isNextDisabled={!name}
@@ -167,7 +148,7 @@ const Qna = () => {
               ))}
             </OptionList>
           </div>
-          <NavigationButtons
+          <NavBtns
             previousQuestion={previousQuestion}
             nextQuestion={nextQuestion}
             isNextDisabled={selectedOptions.length < 1}
@@ -200,7 +181,7 @@ const Qna = () => {
               onChange={q3HandleInputChange}
             />
           </div>
-          <NavigationButtons
+          <NavBtns
             previousQuestion={previousQuestion}
             nextQuestion={nextQuestion}
             isNextDisabled={!q3SelectedOption && !q3InputValue}
@@ -236,7 +217,7 @@ const Qna = () => {
               onChange={q4HandleInputChange}
             />
           </div>
-          <NavigationButtons
+          <NavBtns
             previousQuestion={previousQuestion}
             nextQuestion={nextQuestion}
             isNextDisabled={!q4SelectedOption && !q4InputValue}
@@ -279,10 +260,10 @@ const Qna = () => {
               <div>70</div>
             </Scale>
           </div>
-          <NavigationButtons
+          <NavBtns
             previousQuestion={previousQuestion}
             nextQuestion={nextQuestion}
-            isNextDisabled={!q4SelectedOption && !q4InputValue}
+            isNextDisabled={!q5Value}
             question={question}
             nextButtonClassName="nextButton"
             nextButtonText="제출하기"
@@ -290,11 +271,71 @@ const Qna = () => {
           />
         </>
       )}
+
+      {question === 6 && (
+        <LoadingComponent
+          name={name}
+          setQuestion={setQuestion}
+          selectedOptions={selectedOptions}
+          q3SelectedOption={q3SelectedOption}
+          q3InputValue={q3InputValue}
+          q4SelectedOption={q4SelectedOption}
+          q4InputValue={q4InputValue}
+          q5Value={q5Value}
+        />
+      )}
+
+      {question === 7 && (
+        <div className="q7ResultDiv">
+          <img src="/assets/pocket.svg" alt="주머니 이미지" />
+          <div className="txtDiv">
+            <h2>덕담이 생성되었어요!</h2>
+            <p>
+              다음 페이지에서 <span>나만의 맞춤형 덕담</span>을 확인해보세요.
+            </p>
+          </div>
+          <button onClick={goToQnaResult}>덕담 보러가기</button>
+        </div>
+      )}
     </QnaWrapper>
   );
 };
 
-export default Qna;
+export default BlessingQna;
+
+const LoadingComponent = ({
+  setQuestion,
+  q4SelectedOption,
+  q4InputValue,
+  q5Value,
+  q3SelectedOption,
+  q3InputValue,
+  name,
+  selectedOptions,
+}) => {
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setQuestion((prevQuestion) => prevQuestion + 1);
+    }, 4000);
+    return () => clearTimeout(timeout);
+  }, []);
+
+  return (
+    <div className="q6LoadingDiv">
+      <img src="/assets/loading-orange.svg" alt="Loading" />
+      <div className="txtDiv">
+        <strong>{q4SelectedOption || q4InputValue}</strong>(인)하는{' '}
+        <strong>{q5Value}대</strong>{' '}
+        <strong>
+          <strong>{q3SelectedOption || q3InputValue}</strong> &quot;{name}&quot;
+        </strong>
+        님에게
+        <br /> 보내고 싶은 <strong>{selectedOptions.join(', ')}</strong> 덕담
+        <p>덕담을 만드는 중...</p>
+      </div>
+    </div>
+  );
+};
 
 const ProgressBar = styled.div`
   width: 100%;
@@ -313,7 +354,8 @@ const ProgressBar = styled.div`
 const QnaWrapper = styled.div`
   strong {
     color: var(--main-color);
-    font-size: 40px;
+    font-size: 38px;
+    font-weight: 900;
   }
   header {
     background-color: #fcfafa;
@@ -422,42 +464,60 @@ const QnaWrapper = styled.div`
       justify-content: space-between;
     }
   }
-`;
-
-const ButtonContainer = styled.div`
-  width: 700px;
-  margin: 80px auto;
-  display: flex;
-  justify-content: ${(props) => (props.question === 1 ? 'flex-end' : 'space-between')};
-  button {
+  .q6LoadingDiv {
     display: flex;
+    justify-content: center;
     align-items: center;
-    gap: 20px;
-    p {
-      font-size: 32px;
-      color: ${(props) => (props.disabled ? '#000000' : '#fc764a')};
-      font-weight: bolder;
+    flex-direction: column;
+    font-size: 32px;
+    img {
+      margin-top: 150px;
+      width: 300px;
     }
 
-    img {
-      width: 60px;
+    .txtDiv {
+      margin-top: 20px;
+      text-align: center;
+      h2 {
+        font-size: 40px;
+        font-weight: 700;
+      }
+      p {
+        margin-top: 90px;
+        font-weight: 700;
+      }
     }
   }
-  .previousBtn {
-    opacity: 0.4;
-  }
-  button[disabled] {
-    opacity: 0.4;
-    pointer-events: none;
-  }
-  button:not(:disabled) img {
-    opacity: 2;
-  }
-  .nextButton {
-    padding: 10px 24px;
-    border-radius: 40px;
-    background-color: var(--main-color);
-    p {
+  .q7ResultDiv {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    font-size: 32px;
+    img {
+      margin-top: 150px;
+      width: 300px;
+    }
+    .txtDiv {
+      margin-top: 20px;
+      text-align: center;
+      line-height: 60px;
+      h2 {
+        font-size: 44px;
+        font-weight: 900;
+        margin-bottom: 10px;
+      }
+      span {
+        font-weight: 700;
+      }
+    }
+    button {
+      margin-top: 120px;
+      padding: 15px 45px;
+      border-radius: 10px;
+      background-color: var(--main-color);
+      font-size: 26px;
+      font-weight: 700;
       color: white;
     }
   }
@@ -471,7 +531,6 @@ const OptionList = styled.ul`
   list-style: none;
   padding: 0;
 `;
-
 const OptionItem = styled.li`
   flex-basis: calc(50% - 10px);
   background-color: ${(props) => (props.selected ? '#fc764a' : 'white')};
