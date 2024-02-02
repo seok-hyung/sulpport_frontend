@@ -7,7 +7,7 @@ const Blessing = () => {
   return (
     <BlessingWrapper>
       <header className="topImg">
-        <img src="/assets/dragon-pocket.svg" alt="포켓 든 드래곤" />
+        <img src="/assets/logo-pocket.svg" alt="포켓 든 드래곤" />
         <img src="/assets/blessingTxtOrange.svg" alt="덕담 헤더 텍스트" />
       </header>
       <main>
