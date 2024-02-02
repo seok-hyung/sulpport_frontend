@@ -78,7 +78,7 @@ const BlessingQna = () => {
   // loading
   const [isLoading, setIsLoading] = useState(false);
   const handleSubmit = () => {
-    setIsLoading(true); // 로딩 시작
+    setIsLoading(true);
     // 제출 처리 코드
     // 처리가 끝나면 setIsLoading(false)
   };
@@ -297,6 +297,39 @@ const BlessingQna = () => {
 
 export default BlessingQna;
 
+const LoadingComponent = ({
+  setQuestion,
+  q4SelectedOption,
+  q4InputValue,
+  q5Value,
+  q3SelectedOption,
+  q3InputValue,
+  name,
+  selectedOptions,
+}) => {
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setQuestion((prevQuestion) => prevQuestion + 1);
+    }, 4000);
+    return () => clearTimeout(timeout);
+  }, []);
+
+  return (
+    <div className="q6LoadingDiv">
+      <img src="/assets/loading-orange.svg" alt="Loading" />
+      <div className="txtDiv">
+        <strong>{q4SelectedOption || q4InputValue}</strong>(인)하는{' '}
+        <strong>{q5Value}대</strong>{' '}
+        <strong>
+          <strong>{q3SelectedOption || q3InputValue}</strong> &quot;{name}&quot;
+        </strong>
+        님에게
+        <br /> 보내고 싶은 <strong>{selectedOptions.join(', ')}</strong> 덕담
+        <p>덕담을 만드는 중...</p>
+      </div>
+    </div>
+  );
+};
 const ProgressBar = styled.div`
   width: 100%;
   background-color: #f2f2f2;
