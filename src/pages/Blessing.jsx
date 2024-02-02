@@ -7,7 +7,7 @@ const Blessing = () => {
   return (
     <BlessingWrapper>
       <header className="topImg">
-        <img src="/assets/thumbUp-img.svg" alt="엄지척 이미지" />
+        <img src="/assets/dragon-pocket.svg" alt="포켓 든 드래곤" />
         <img src="/assets/blessingTxtOrange.svg" alt="덕담 헤더 텍스트" />
       </header>
       <main>
@@ -29,7 +29,7 @@ const Blessing = () => {
         <button
           className="blessingBtn"
           onClick={() => {
-            navigate('/qna');
+            navigate('/blessingQna');
           }}
         >
           맞춤형 덕담 찾아보기!
