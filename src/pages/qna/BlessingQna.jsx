@@ -8,7 +8,6 @@ const BlessingQna = () => {
   const navigate = useNavigate();
   //q1
   const [question, setQuestion] = useState(1);
-  console.log(question);
   const [progress, setProgress] = useState(20);
   const [name, setName] = useState('');
   const handleInputChange = (e) => {
@@ -29,7 +28,7 @@ const BlessingQna = () => {
 
   //q2
   const [selectedOptions, setSelectedOptions] = useState([]);
-  const q2Options = ['응원하는', '위로하는', '정중한', '부드러운', '반말', '존댓말'];
+  const toneOptions = ['응원하는', '위로하는', '정중한', '부드러운', '반말', '존댓말'];
   const handleSelect = (value) => {
     if (selectedOptions.includes(value)) {
       setSelectedOptions(selectedOptions.filter((option) => option !== value));
@@ -41,7 +40,7 @@ const BlessingQna = () => {
   //q3
   const [q3SelectedOption, setQ3SelectedOption] = useState('');
   const [q3InputValue, setQ3InputValue] = useState('');
-  const q3Options = ['부모', '자녀', '친척', '직장 동료', '직장 상사', '친구'];
+  const relationOptions = ['부모', '자녀', '친척', '직장 동료', '직장 상사', '친구'];
   const q3HandleSelect = (value) => {
     if (q3SelectedOption === value) {
       setQ3SelectedOption('');
@@ -76,13 +75,6 @@ const BlessingQna = () => {
   const q5HandleChange = (e) => {
     setQ5Value(e.target.value);
   };
-  // loading
-  const [isLoading, setIsLoading] = useState(false);
-  const handleSubmit = () => {
-    setIsLoading(true);
-    // 제출 처리 코드
-    // 처리가 끝나면 setIsLoading(false)
-  };
   //q7
   // ! 추가 작업 필요
   // 5개 질문지 답 정보들을 모아서 서버에 요청보내며, 결과페이지로 이동하는 함수
@@ -115,12 +107,12 @@ const BlessingQna = () => {
   ]);
   console.log(formData);
 
+  const [isLoading, setIsLoading] = useState(false);
   const goToQnaResult = () => {
-    navigate('/blessingQnaResult');
-    // api 요청 코드
+    setIsLoading(true); // 로딩 시작
     postBlessingMent(formData).then((res) => {
-      console.log('서버 성공!');
-      console.log(res);
+      setIsLoading(false); // 로딩 종료
+      navigate('/blessingQnaResult', { state: res });
     });
   };
   return (
@@ -156,6 +148,7 @@ const BlessingQna = () => {
             nextQuestion={nextQuestion}
             isNextDisabled={!name}
             question={question}
+            color={'var(--main-color)'}
           />
         </>
       )}
@@ -168,7 +161,7 @@ const BlessingQna = () => {
             </p>
             <small>최대 3개를 선택할 수 있어요</small>
             <OptionList>
-              {q2Options.map((value) => (
+              {toneOptions.map((value) => (
                 <OptionItem
                   key={value}
                   selected={selectedOptions.includes(value)}
@@ -184,6 +177,7 @@ const BlessingQna = () => {
             nextQuestion={nextQuestion}
             isNextDisabled={selectedOptions.length < 1}
             question={question}
+            color={'var(--main-color)'}
           />
         </>
       )}
@@ -195,7 +189,7 @@ const BlessingQna = () => {
               Q3 <strong>{name}</strong>(와)과의 관계는?
             </p>
             <OptionList>
-              {q3Options.map((value) => (
+              {relationOptions.map((value) => (
                 <OptionItem
                   key={value}
                   selected={q3SelectedOption === value}
@@ -217,6 +211,7 @@ const BlessingQna = () => {
             nextQuestion={nextQuestion}
             isNextDisabled={!q3SelectedOption && !q3InputValue}
             question={question}
+            color={'var(--main-color)'}
           />
         </>
       )}
@@ -253,6 +248,7 @@ const BlessingQna = () => {
             nextQuestion={nextQuestion}
             isNextDisabled={!q4SelectedOption && !q4InputValue}
             question={question}
+            color={'var(--main-color)'}
           />
         </>
       )}
@@ -299,22 +295,36 @@ const BlessingQna = () => {
             nextButtonClassName="nextButton"
             nextButtonText="제출하기"
             nextButtonIcon="/assets/arrow-right-white-icon.svg"
+            color={'var(--main-color)'}
           />
         </>
       )}
 
-      {question === 6 && (
-        <LoadingComponent
-          name={name}
-          setQuestion={setQuestion}
-          selectedOptions={selectedOptions}
-          q3SelectedOption={q3SelectedOption}
-          q3InputValue={q3InputValue}
-          q4SelectedOption={q4SelectedOption}
-          q4InputValue={q4InputValue}
-          q5Value={q5Value}
-        />
-      )}
+      {question === 6 &&
+        (isLoading ? (
+          <LoadingComponent
+            name={name}
+            setQuestion={setQuestion}
+            selectedOptions={selectedOptions}
+            q3SelectedOption={q3SelectedOption}
+            q3InputValue={q3InputValue}
+            q4SelectedOption={q4SelectedOption}
+            q4InputValue={q4InputValue}
+            q5Value={q5Value}
+            color={'var(--main-color)'}
+          />
+        ) : (
+          <div className="q7ResultDiv">
+            <img src="/assets/pocket.svg" alt="주머니 이미지" />
+            <div className="txtDiv">
+              <h2>덕담이 생성되었어요!</h2>
+              <p>
+                다음 페이지에서 <span>나만의 맞춤형 덕담</span>을 확인해보세요.
+              </p>
+            </div>
+            <button onClick={goToQnaResult}>덕담 보러가기</button>
+          </div>
+        ))}
 
       {question === 7 && (
         <div className="q7ResultDiv">
@@ -344,13 +354,6 @@ const LoadingComponent = ({
   name,
   selectedOptions,
 }) => {
-  useEffect(() => {
-    const timeout = setTimeout(() => {
-      setQuestion((prevQuestion) => prevQuestion + 1);
-    }, 1000);
-    return () => clearTimeout(timeout);
-  }, []);
-
   return (
     <div className="q6LoadingDiv">
       <img src="/assets/loading-card-orange.svg" alt="Loading" />
