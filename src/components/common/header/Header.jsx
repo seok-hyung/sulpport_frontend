@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { styled, css, keyframes } from 'styled-components';
+import { styled, keyframes } from 'styled-components';
 
 const Header = () => {
   const [isInputOpen, setIsInputOpen] = useState(false);
@@ -58,9 +58,9 @@ const HeaderWrapper = styled.header`
     display: flex;
     justify-content: space-between;
     align-items: center;
-
+    margin-bottom: 20px;
     img {
-      width: 40px;
+      width: 50px;
     }
   }
   section {
@@ -106,7 +106,7 @@ const SearchWrapper = styled.div`
   align-items: center;
   img {
     margin-left: auto;
-    margin-right: 20px;
+    margin-right: 40px;
     z-index: 10;
   }
 `;
@@ -115,8 +115,8 @@ const SearchInputSlideIn = styled.input`
   position: absolute;
   right: 0px;
   z-index: 0;
-  padding: 20px;
-  border-radius: 30px;
+  padding: 30px;
+  border-radius: 40px;
   border: none;
   outline: none;
   background-color: #f2f2f2;
