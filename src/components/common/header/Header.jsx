@@ -40,6 +40,11 @@ const Header = () => {
           <img src={searchIcon} alt="검색 이미지" onClick={handleSearchClick} />
         </SearchWrapper>
       </ul>
+
+      <section className="logoNTxt">
+        <img src="/assets/main-logo.svg" alt="메인 로고" />
+        <img src="/assets/main-txt.svg" alt="메인 텍스트" />
+      </section>
     </HeaderWrapper>
   );
 };
@@ -56,6 +61,19 @@ const HeaderWrapper = styled.header`
 
     img {
       width: 40px;
+    }
+  }
+  section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    img:first-of-type {
+      width: 300px;
+      margin-left: 70px;
+    }
+    img:last-of-type {
+      width: 400px;
     }
   }
 `;
