@@ -28,16 +28,46 @@ const BlessingQnaResult = () => {
     }
   };
 
+  // 공유하기 버튼
+  const [isShareActive, setIsShareActive] = useState(false);
+  const [showShareButton, setShowShareButton] = useState(true);
+  const [showShareOptions, setShowShareOptions] = useState(false);
+
+  const handleChatMessageClick = (msg) => {
+    if (msg.sender === 'server') {
+      setIsShareActive(true);
+    }
+  };
+  const handleShareClick = () => {
+    setIsShareActive(true);
+    setShowShareOptions(true);
+    setShowShareButton(false);
+  };
+
+  const handleBackClick = () => {
+    setShowShareOptions(false);
+    setShowShareButton(true);
+  };
   return (
     <Wrapper>
       <header>
         <img src="/assets/blessingTxtOrange.svg" alt="" />
       </header>
       <ChatBox>
-        {chat.map((msg, index) => (
-          <div key={index}>{msg}</div>
-          // 예시
-        ))}
+        {chat.map((msg, index) => {
+          const isServerMessage = msg.sender === 'server';
+          return (
+            <div
+              key={index}
+              className={`chat-message ${
+                isServerMessage ? 'server-message' : 'user-message'
+              }`}
+              onClick={() => handleChatMessageClick(msg)}
+            >
+              {msg.text}
+            </div>
+          );
+        })}
       </ChatBox>
       <FoldableArea isFolded={isFolded}>
         <FoldBar
@@ -72,7 +102,26 @@ const BlessingQnaResult = () => {
               강조해서 다시 만들기
             </EmphasizeBtn>
             <button className="remakeBtn">다시만들기</button>
-            <button className="shareBtn">덕담 공유하기</button>
+            {showShareButton && (
+              <ShareBtn onClick={handleShareClick} isActive={isShareActive}>
+                덕담 공유하기
+              </ShareBtn>
+            )}
+            {/* //! 카카오톡 공유하기 기능, 클립보드 복사 기능 */}
+            {showShareOptions && (
+              <>
+                <ShareOptions>
+                  <div className="imgGroups">
+                    <img src="/assets/kakao.svg" alt="Share option 1" />
+                    <img src="/assets/clipboard.svg" alt="Share option 2" />
+                  </div>
+                  <p>
+                    <span>공유 방식</span>을 선택하세요
+                  </p>
+                </ShareOptions>
+                <BackBtn onClick={handleBackClick}>이전으로</BackBtn>
+              </>
+            )}
           </div>
         </ContentWrapper>
       </FoldableArea>
@@ -106,6 +155,21 @@ const ChatBox = styled.div`
   transition: all 0.5s ease-in-out;
   overflow-y: auto;
   box-shadow: inset 0 0 0 3px red;
+  .chat-message {
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+  }
+  .server-message {
+    background-color: #f2f2f2;
+    color: black;
+    margin-left: auto;
+  }
+  .user-message {
+    background-color: var(--main-color);
+    color: white;
+    margin-right: auto;
+  }
 `;
 
 const FoldableArea = styled.div`
@@ -117,13 +181,14 @@ const FoldableArea = styled.div`
   text-align: center;
   p {
     color: #979393;
-    font-size: 24px;
-    margin-bottom: 30px;
+    font-size: 22px;
+    line-height: 25px;
+    margin-bottom: 20px;
   }
   .toneGroups {
     display: flex;
     gap: 25px;
-    margin-bottom: 20px;
+    margin-bottom: 15px;
     justify-content: center;
   }
 
@@ -133,16 +198,16 @@ const FoldableArea = styled.div`
       background-color: var(--main-color);
       color: white;
       padding: 5px 10px;
-      font-size: 28px;
+      font-size: 24px;
       border-radius: 10px;
-      margin: 0 auto 50px auto;
+      margin: 0 auto 30px auto;
     }
-    .shareBtn {
-      color: white;
-      background-color: #5d5b52;
-      padding: 5px 10px;
-      font-size: 32px;
-      border-radius: 10px;
+    .shareTxt {
+      color: black;
+
+      span {
+        font-weight: bolder;
+      }
     }
   }
 `;
@@ -154,10 +219,21 @@ const ContentWrapper = styled.div`
   align-items: center;
   flex-direction: column;
 `;
+const FoldBar = styled.div`
+  height: ${(props) => (props.isFolded ? '50px' : '500px')};
+  left: 430px;
+  width: 100px;
+  height: 10px;
+  margin: 16px auto;
+  border-radius: 10px;
+  background-color: #dccfcd;
+  margin-bottom: 30px;
+  cursor: pointer;
+`;
 const ToneButton = styled.button`
   background-color: ${(props) => (props.isActive ? `var(--main-color)` : 'white')};
   color: ${(props) => (props.isActive ? 'white' : 'black')};
-  padding: 3px 15px;
+  padding: 3px 20px;
   border-radius: 15px;
   font-size: 20px;
 `;
@@ -165,19 +241,45 @@ const EmphasizeBtn = styled.button`
   background-color: ${(props) => (props.isActive ? 'var(--main-color)' : '#b5b5b5')};
   color: white;
   padding: 5px 10px;
-  font-size: 28px;
+  font-size: 24px;
   border-radius: 10px;
   margin-bottom: 20px;
 `;
-
-const FoldBar = styled.div`
-  height: ${(props) => (props.isFolded ? '50px' : '500px')};
-  left: 430px;
-  width: 100px;
-  height: 10px;
-  margin: 20px auto;
+const ShareBtn = styled.button`
+  background-color: ${(props) => (props.isActive ? 'var(--main-color)' : '#b5b5b5')};
+  color: white;
+  padding: 5px 10px;
+  font-size: 28px;
   border-radius: 10px;
-  background-color: #dccfcd;
-  margin-bottom: 30px;
-  cursor: pointer;
+  margin-bottom: 15px;
+`;
+const ShareOptions = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  .imgGroups {
+    display: flex;
+    gap: 20px;
+  }
+  img {
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+    margin-bottom: 15px;
+  }
+  p {
+    color: black;
+  }
+  span {
+    font-weight: bolder;
+  }
+`;
+
+const BackBtn = styled.button`
+  background-color: var(--main-color);
+  color: white;
+  padding: 5px 10px;
+  font-size: 28px;
+  border-radius: 10px;
+  margin-bottom: 15px;
 `;
