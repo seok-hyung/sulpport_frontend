@@ -112,6 +112,9 @@ const CarouselSection = styled.section`
   display: flex;
   height: 300px;
   margin: 0 auto;
+  @media (max-width: 768px) {
+    width: 700px;
+  }
   .img-container {
     position: relative;
     width: 100%;

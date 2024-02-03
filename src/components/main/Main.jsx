@@ -4,6 +4,9 @@ import Carousel from '../carousel/Carousel';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { informationList } from './informationList';
+import { useEffect } from 'react';
+import { useSwipeable } from 'react-swipeable';
+import Draggable from 'react-draggable';
 
 const Main = () => {
   const navitgate = useNavigate();
@@ -12,15 +15,30 @@ const Main = () => {
       <MainWrapper>
         <IntroduceSection>
           <ul className="menusUl">
-            <li className="blessing">
+            <li
+              className="blessing"
+              onClick={() => {
+                navitgate('/blessing');
+              }}
+            >
               <img src="/assets/logo-pocket.svg" alt="로고 이미지" />
               <p>덕담 가이드</p>
             </li>
-            <li className="present">
+            <li
+              className="present"
+              onClick={() => {
+                navitgate('/moneyPresent');
+              }}
+            >
               <img src="/assets/present.svg" alt="선물 이미지" />
               <p>용돈/선물 추천</p>
             </li>
-            <li className="informtion">
+            <li
+              className="informtion"
+              onClick={() => {
+                navitgate('/knowledge');
+              }}
+            >
               <img src="/assets/dictionary-icon.svg" alt="사전 이미지" />
               <p>설날 상식백과</p>
             </li>
@@ -75,7 +93,11 @@ const Main = () => {
                 <img src="/assets/logo-circle-orange.svg" alt="원모양 로고" />
                 <h2>궁금증을 해결해드립니다.</h2>
               </div>
-              <img src="/assets/information-txt.svg" alt="설날 상식 백과 텍스트" />
+              <img
+                className="knowledgeTxt"
+                src="/assets/knowledge-txt.svg"
+                alt="설날 상식 백과 텍스트"
+              />
             </div>
             <button>더보기</button>
           </div>
@@ -94,6 +116,9 @@ const MainWrapper = styled.main`
   justify-content: center;
   flex-direction: column;
   font-size: 24px;
+  @media (max-width: 768px) {
+    font-size: 16px;
+  }
 `;
 
 const IntroduceSection = styled.section`
@@ -105,24 +130,51 @@ const IntroduceSection = styled.section`
     align-items: center;
     text-align: center;
     gap: 100px;
-    img {
-      width: calc(650px / 3);
+    @media (max-width: 768px) {
+      width: 690px;
+    }
+
+    @media (max-width: 768px) {
+      img {
+        width: 90px;
+      }
+      gap: 50px;
     }
     li {
       border-radius: 20px;
       padding: 15px 40px 25px 40px;
+      cursor: pointer;
+      @media (max-width: 768px) {
+        width: 180px;
+        height: 196px;
+        padding: 10px;
+      }
+      img {
+        width: 200px;
+        @media (max-width: 768px) {
+          width: 120px;
+          margin-top: -30px;
+        }
+      }
       p {
         margin-top: 20px;
         font-size: 36px;
         color: white;
         font-weight: 700;
+        @media (max-width: 768px) {
+          margin-top: 0px;
+          font-size: 22px;
+        }
       }
     }
+    /* li:nth-child(2) {
+      width: 10px;
+    } */
     .blessing {
       background-color: var(--main-color);
     }
     .present {
-      background-color: #28afb0;
+      background-color: var(--sub-color);
     }
     .informtion {
       background-color: #37392e;
@@ -134,13 +186,19 @@ const TestSection = styled.section`
   margin-top: 70px;
   width: 1300px;
   margin: 120px auto 0 auto;
-
+  @media (max-width: 768px) {
+    width: 100%;
+    padding: 0 20px;
+  }
   h2 {
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 36px;
     gap: 10px;
+    @media (max-width: 768px) {
+      justify-content: flex-start;
+    }
     img {
       width: 40px;
     }
@@ -158,22 +216,36 @@ const TestSection = styled.section`
       padding: 50px;
       border-radius: 20px;
       background: linear-gradient(to bottom, #eee 20%, rgba(25, 100, 126, 0.2) 80%);
+      @media (max-width: 768px) {
+        width: 100vw;
+      }
       .left {
+        margin-right: 250px;
+        @media (max-width: 768px) {
+          margin-right: -75px;
+        }
         .tags {
           font-size: 30px;
           color: #37392e;
+          @media (max-width: 768px) {
+            min-width: 320px;
+            font-size: 24px;
+          }
         }
         img {
           width: 200px;
           margin-top: 20px;
           height: fit-content;
+          @media (max-width: 768px) {
+            width: 180px;
+          }
         }
         button {
           background-color: #19647e;
           color: white;
           font-size: 24px;
           display: block;
-          margin-top: 180px;
+          margin-top: 220px;
           border-radius: 10px;
           padding: 10px 20px;
         }
@@ -181,7 +253,9 @@ const TestSection = styled.section`
       .right {
         img {
           width: 450px;
-          margin-left: 250px;
+          @media (max-width: 768px) {
+            width: 350px;
+          }
         }
       }
     }
@@ -191,15 +265,28 @@ const TestSection = styled.section`
       padding: 50px;
       border-radius: 20px;
       background: linear-gradient(to bottom, #eee 20%, rgba(25, 100, 126, 0.2) 80%);
+      @media (max-width: 768px) {
+        width: 100vw;
+      }
       .left {
+        margin-right: 150px;
+        @media (max-width: 768px) {
+          margin-right: -200px;
+        }
         .tags {
           font-size: 30px;
           color: #37392e;
+          @media (max-width: 768px) {
+            min-width: 400px;
+          }
         }
         img {
           width: 300px;
           margin-top: 20px;
           height: fit-content;
+          @media (max-width: 768px) {
+            width: 250px;
+          }
         }
         button {
           background-color: #19647e;
@@ -209,13 +296,14 @@ const TestSection = styled.section`
           margin-top: 190px;
           border-radius: 10px;
           padding: 10px 20px;
-          margin-bottom: 20px;
         }
       }
       .right {
         img {
           width: 600px;
-          margin-left: 150px;
+          @media (max-width: 768px) {
+            width: 400px;
+          }
         }
       }
     }
@@ -225,16 +313,23 @@ const TestSection = styled.section`
 const ChalyeSection = styled.section`
   width: 1300px;
   margin: 120px auto 0 auto;
-  box-shadow: inset 0 0 0 3px blue;
+  @media (max-width: 768px) {
+    width: 100%;
+    padding: 0 20px;
+  }
   .chlyeHeaderDiv {
     display: flex;
     justify-content: center;
     align-items: center;
+    position: relative;
+    @media (max-width: 768px) {
+      justify-content: flex-start;
+    }
     .left {
       display: flex;
       flex-direction: column;
       align-items: center;
-      margin-right: 500px;
+
       .left2 {
         display: flex;
         gap: 10px;
@@ -248,121 +343,102 @@ const ChalyeSection = styled.section`
       }
     }
     button {
-    }
-
-    img:last-of-type {
-      width: 200px;
-    }
-    button {
       background-color: #19647e;
       color: white;
-      font-size: 24px;
-      display: block;
+      font-size: 28px;
       border-radius: 10px;
-      padding: 10px 30px;
+      padding: 12px 40px;
       height: fit-content;
+      position: absolute;
+      right: 0;
     }
   }
 `;
 
-// const CardCarousel = styled.div`
-//   display: flex;
-//   overflow-x: auto;
-//   scroll-snap-type: x mandatory;
-//   position: relative;
-//   scrollbar-width: none; /* Firefox */
-//   -ms-overflow-style: none; /* IE and Edge */
-//   &::-webkit-scrollbar {
-//     display: none; /* Chrome, Safari and Opera */
-//   }
-// `;
-
-// const CardList = styled.ul`
-//   display: flex;
-//   padding: 50px;
-//   box-shadow: inset 0 0 0 3px orange;
-//   gap: 40px;
-//   li {
-//     padding: 30px 50px;
-//     background-size: cover;
-//     background-repeat: no-repeat;
-//   }
-//   li:nth-child(1) {
-//     background-image: url('/assets/chalye1-shadow.svg');
-//   }
-//   li:nth-child(2) {
-//     background-image: url('/assets/chalye2-shadow.svg');
-//   }
-//   li:nth-child(3) {
-//     background-image: url('/assets/chalye3-shadow.svg');
-//   }
-// `;
-
-// const CardItem = styled.li`
-//   flex: 0 0 auto;
-//   width: 500px;
-//   scroll-snap-align: start;
-//   height: 600px;
-//   padding: 30px 50px;
-//   background-size: cover;
-//   background-repeat: no-repeat;
-//   .cardTags {
-//     font-size: 20px;
-//     color: black;
-//     margin-bottom: 20px;
-//   }
-//   .cardTxt {
-//     font-size: 28px;
-//     color: black;
-//     font-weight: 900;
-//   }
-// `;
-
-// const ScrollButton = styled.button`
-//   position: absolute;
-//   top: 50%;
-//   transform: translateY(-50%);
-//   background-color: rgba(0, 0, 0, 0.5);
-//   color: white;
-//   border: none;
-//   cursor: pointer;
-//   z-index: 10;
-//   padding: 10px 20px;
-//   font-size: 18px;
-//   border-radius: 5px;
-
-//   &:hover {
-//     background-color: rgba(0, 0, 0, 0.7);
-//   }
-// `;
-
-// const PrevButton = styled(ScrollButton)`
-//   left: 10px;
-//   visibility: ${(props) => (props.visible ? 'visible' : 'hidden')};
-// `;
-
-// const NextButton = styled(ScrollButton)`
-//   right: 10px;
-//   visibility: ${(props) => (props.visible ? 'visible' : 'hidden')};
-// `;
-
 const CardCarousel = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const infoList = informationList;
-
-  const goToNextSlide = () => {
-    const nextIndex = (currentIndex + 1) % infoList.length;
-    setCurrentIndex(nextIndex);
+  const [windowDimensions, setWindowDimensions] = useState(window.innerWidth);
+  const [isDragging, setIsDragging] = useState(false);
+  const [startPosition, setStartPosition] = useState(0);
+  const [currentTranslate, setCurrentTranslate] = useState(0);
+  const [prevTranslate, setPrevTranslate] = useState(0);
+  const handleMouseDown = (e) => {
+    setStartPosition(getPositionX(e));
+    setIsDragging(true);
+    requestAnimationFrame(animation);
   };
+
+  const handleMouseMove = (e) => {
+    if (isDragging) {
+      const currentPosition = getPositionX(e);
+      setCurrentTranslate(prevTranslate + currentPosition - startPosition);
+    }
+  };
+
+  const handleMouseUp = () => {
+    setIsDragging(false);
+    setPrevTranslate(currentTranslate);
+
+    const movedBy = currentTranslate - prevTranslate;
+
+    if (movedBy < -100 && currentIndex < infoList.length - 1) {
+      goToNextSlide();
+    }
+
+    if (movedBy > 100 && currentIndex > 0) {
+      goToPrevSlide();
+    }
+  };
+  useEffect(() => {
+    function handleResize() {
+      setWindowDimensions(window.innerWidth);
+    }
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  // 이미지가 드래그 중일떄 이미지를 움직이는 함수
+  const animation = () => {
+    setSliderPosition();
+    if (isDragging) requestAnimationFrame(animation);
+  };
+  const setSliderPosition = () => {
+    const imgContainer = document.querySelector('.img-container');
+    imgContainer.style.transform = `translateX(${currentTranslate}px)`;
+  };
+
+  const getPositionX = (e) => {
+    if (e.type.includes('mouse')) {
+      // 마우스 이벤트
+      return e.pageX;
+    } else {
+      // 터치 이벤트
+      return e.touches[0].clientX;
+    }
+  };
+  const goToNextSlide = () => {
+    const increment = windowDimensions >= 768 ? 4 : 3;
+    if (currentIndex + increment < infoList.length) {
+      setCurrentIndex(currentIndex + increment);
+    }
+  };
+
   const goToPrevSlide = () => {
-    const prevIndex = (currentIndex - 1 + infoList.length) % infoList.length;
-    setCurrentIndex(prevIndex);
+    const decrement = windowDimensions >= 768 ? 4 : 3;
+    if (currentIndex - decrement >= 0) {
+      setCurrentIndex(currentIndex - decrement);
+    }
   };
 
   return (
     <>
       <CarouselContainerDiv>
-        <div className="circle left">
+        <div
+          className="circle left"
+          style={{ display: windowDimensions < 768 ? 'none' : 'block' }}
+        >
           <img
             className="icon"
             onClick={goToPrevSlide}
@@ -370,22 +446,54 @@ const CardCarousel = () => {
             alt="좌측 이동 화살표"
           />
         </div>
-        <div className="img-container">
-          {infoList.map((info, index) => (
-            <>
-              <CarouselImg
-                index={index}
-                currentIndex={currentIndex}
-                key={info.id}
-                src={info.url}
-                alt="캐러셀 이미지"
-              />
-              <Tag>{info.tags}</Tag>
-              <Text>{info.txt}</Text>
-            </>
-          ))}
-        </div>
-        <div className="circle right">
+
+        {windowDimensions <= 768 ? (
+          <div>
+            <div
+              className="img-container"
+              onMouseDown={handleMouseDown}
+              onMouseMove={handleMouseMove}
+              onMouseUp={handleMouseUp}
+              onMouseLeave={handleMouseUp}
+            >
+              {infoList
+                .slice(currentIndex, currentIndex + (windowDimensions >= 768 ? 4 : 3))
+                .map((info, index) => (
+                  <CarouselItem key={info.id} windowDimensions={windowDimensions}>
+                    <CarouselImg
+                      index={index}
+                      key={info.id}
+                      src={info.url}
+                      alt="캐러셀 이미지"
+                      windowDimensions={windowDimensions}
+                    />
+                  </CarouselItem>
+                ))}
+            </div>
+          </div>
+        ) : (
+          <>
+            <div className="img-container">
+              {infoList
+                .slice(currentIndex, currentIndex + (windowDimensions >= 768 ? 4 : 3))
+                .map((info, index) => (
+                  <CarouselItem key={info.id} windowDimensions={windowDimensions}>
+                    <CarouselImg
+                      index={index}
+                      key={info.id}
+                      src={info.url}
+                      alt="캐러셀 이미지"
+                      windowDimensions={windowDimensions}
+                    />
+                  </CarouselItem>
+                ))}
+            </div>
+          </>
+        )}
+        <div
+          className="circle right"
+          style={{ display: windowDimensions < 768 ? 'none' : 'block' }}
+        >
           <img
             className="icon"
             onClick={goToNextSlide}
@@ -400,13 +508,23 @@ const CardCarousel = () => {
 
 const CarouselContainerDiv = styled.div`
   position: relative;
-  width: 1000px;
-  height: auto;
-  margin: 0 auto;
-  overflow: hidden;
+  width: 1300px;
+  margin: 40px auto 0 auto;
+  @media (max-width: 768px) {
+    margin-top: 0px;
+    width: 690px;
+  }
+  .img-container {
+    position: relative;
+    width: 100%;
+    height: 500px; // 또는 적절한 고정 높이 설정
+    overflow: hidden;
+    border-radius: 20px;
+    display: flex;
+  }
   .circle {
     position: absolute;
-    z-index: 10;
+    z-index: 1000;
     top: 50%;
     transform: translateY(-50%);
     cursor: pointer;
@@ -420,7 +538,7 @@ const CarouselContainerDiv = styled.div`
     border: 3px solid #e9e9ec;
     box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
     .icon {
-      max-width: 40px;
+      max-width: 80px;
     }
   }
   .circle:hover {
@@ -430,41 +548,29 @@ const CarouselContainerDiv = styled.div`
     background-color: white;
   }
   .circle.left {
-    left: 80px;
+    left: -45px;
   }
   .circle.right {
-    right: 80px;
+    right: -25px;
   }
-  .img-container {
-    position: relative;
-    width: 100vw;
-    overflow: hidden;
+`;
+
+const CarouselItem = styled.div`
+  position: relative;
+  min-width: ${(props) =>
+    props.windowDimensions >= 768 ? 'calc(25% - 15px)' : 'calc(33.33% - 20px)'};
+  height: 500px;
+  margin-right: 90px;
+  transition: transform 0.5s ease-out;
+  &:last-child {
+    margin-right: 0;
   }
 `;
 
 const CarouselImg = styled.img`
   position: absolute;
-  object-fit: cover;
-  width: 400px;
-  transform: ${(props) => `translateX(${(props.index - props.currentIndex) * 100}%)`};
+  transform: ${(props) =>
+    `translateX(-${props.index * (props.windowDimensions >= 768 ? 25 : 33.33)}%)`};
   transition: transform ease-out 0.5s;
-  width: 200px;
-  height: 300px;
-`;
-
-const Tag = styled.p`
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  background-color: rgba(0, 0, 0, 0.5);
-  color: white;
-  padding: 5px;
-  border-radius: 5px;
-`;
-
-const Text = styled.p`
-  position: absolute;
-  top: 30px;
-  right: 10px;
-  color: white;
+  border-radius: 20px;
 `;

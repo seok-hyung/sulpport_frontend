@@ -62,6 +62,10 @@ const HeaderWrapper = styled.header`
     img {
       width: 50px;
     }
+    @media (max-width: 768px) {
+      width: 100%;
+      padding: 0 30px;
+    }
   }
   section {
     display: flex;
@@ -71,9 +75,20 @@ const HeaderWrapper = styled.header`
     img:first-of-type {
       width: 300px;
       margin-left: 70px;
+      @media (max-width: 768px) {
+      }
     }
     img:last-of-type {
       width: 400px;
+    }
+    @media (max-width: 768px) {
+      img:first-of-type {
+        width: 200px;
+        margin-left: 50px;
+      }
+      img:last-of-type {
+        width: 300px;
+      }
     }
   }
 `;
@@ -109,6 +124,11 @@ const SearchWrapper = styled.div`
     margin-right: 40px;
     z-index: 10;
   }
+  @media (max-width: 768px) {
+    img {
+      margin-right: 10px;
+    }
+  }
 `;
 
 const SearchInputSlideIn = styled.input`
@@ -122,6 +142,9 @@ const SearchInputSlideIn = styled.input`
   background-color: #f2f2f2;
   animation: ${slideIn} 0.5s forwards ease-out;
   font-size: 24px;
+  @media (max-width: 768px) {
+    font-size: 16px;
+  }
   &:focus {
     background-color: #ffffff;
     border: 1px solid var(--main-color);
