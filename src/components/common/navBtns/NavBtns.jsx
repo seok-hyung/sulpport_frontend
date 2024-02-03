@@ -9,12 +9,14 @@ const NavBtns = ({
   nextButtonClassName,
   nextButtonText,
   nextButtonIcon,
+  color,
+  backgroundColor,
 }) => {
   return (
-    <ButtonContainer question={question}>
+    <ButtonContainer question={question} color={color} backgroundColor={backgroundColor}>
       {question !== 1 && (
         <button onClick={previousQuestion} className="previousBtn">
-          <img src="/assets/arrow-left-orange-icon.svg" alt="왼쪽 화살표" />
+          <img src="/assets/arrow-left-icon.svg" alt="왼쪽 화살표" />
           <p>이전으로</p>
         </button>
       )}
@@ -23,7 +25,7 @@ const NavBtns = ({
         disabled={isNextDisabled}
         className={nextButtonClassName}
       >
-        <p>{nextButtonText || '다음으로'}</p>
+        <p className="nextTxt">{nextButtonText || '다음으로'}</p>
         <img
           src={nextButtonIcon || '/assets/arrow-right-orange-icon.svg'}
           alt="오른쪽 화살표"
@@ -46,8 +48,11 @@ const ButtonContainer = styled.div`
     gap: 20px;
     p {
       font-size: 32px;
-      color: ${(props) => (props.disabled ? '#000000' : '#fc764a')};
+      color: #000000;
       font-weight: bolder;
+    }
+    .nextTxt {
+      color: ${(props) => (props.disabled ? '#000000' : `${props.color}`)};
     }
 
     img {
@@ -55,10 +60,10 @@ const ButtonContainer = styled.div`
     }
   }
   .previousBtn {
-    opacity: 0.4;
+    opacity: 0.3;
   }
   button[disabled] {
-    opacity: 0.4;
+    opacity: 0.3;
     pointer-events: none;
   }
   button:not(:disabled) img {
@@ -67,7 +72,8 @@ const ButtonContainer = styled.div`
   .nextButton {
     padding: 10px 24px;
     border-radius: 40px;
-    background-color: var(--main-color);
+    background-color: ${(props) =>
+      props.backgroundColor ? 'var(--sub-color)' : 'var(--main-color)'};
     p {
       color: white;
     }
