@@ -1,7 +1,12 @@
 import React, { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import { styled } from 'styled-components';
 
 const BlessingQnaResult = () => {
+  const location = useLocation();
+  // const formInfo = location.state.formData;
+  const response = location.state.res.choices[0].message.content;
+  const [selectedMessage, setSelectedMessage] = useState();
   const [chat, setChat] = useState([]);
   const [isFolded, setIsFolded] = useState(false);
   const [isActive, setIsActive] = useState({
@@ -28,46 +33,89 @@ const BlessingQnaResult = () => {
     }
   };
 
-  // 공유하기 버튼
+  // 덕담 공유하기 버튼
   const [isShareActive, setIsShareActive] = useState(false);
   const [showShareButton, setShowShareButton] = useState(true);
   const [showShareOptions, setShowShareOptions] = useState(false);
 
   const handleChatMessageClick = (msg) => {
     if (msg.sender === 'server') {
-      setIsShareActive(true);
+      if (selectedMessage === msg) {
+        setIsShareActive(false);
+        setSelectedMessage(null);
+      } else {
+        setIsShareActive(true);
+        setSelectedMessage(msg);
+      }
     }
   };
   const handleShareClick = () => {
-    setIsShareActive(true);
-    setShowShareOptions(true);
-    setShowShareButton(false);
+    if (isShareActive) {
+      setIsShareActive(true);
+      setShowShareOptions(true);
+      setShowShareButton(false);
+    }
   };
 
   const handleBackClick = () => {
     setShowShareOptions(false);
     setShowShareButton(true);
   };
+  useEffect(() => {
+    let initialChat = [];
+
+    // response를 채팅 로그에 추가
+    initialChat.push({
+      sender: 'server',
+      text: response,
+    });
+
+    setChat(initialChat);
+  }, []);
+
+  // 카카오톡 공유하기
+  const handleKakaoClick = () => {
+    // 카카오톡 공유하기
+    window.Kakao.init('ab36dcefbb0413d6fa467641c2864216');
+    window.Kakao.Link.sendDefault({
+      objectType: 'text',
+      text: selectedMessage,
+      link: {
+        mobileWebUrl: 'https://developers.kakao.com',
+        webUrl: 'https://developers.kakao.com',
+      },
+    });
+  };
+
+  // 클립보드에 복사
+  const [toastVisible, setToastVisible] = useState(false);
+  const handleCopyClick = () => {
+    navigator.clipboard.writeText(selectedMessage.text);
+    setToastVisible(true);
+    setTimeout(() => setToastVisible(false), 3000); // 3초 후 메시지 숨김
+  };
   return (
     <Wrapper>
       <header>
         <img src="/assets/blessingTxtOrange.svg" alt="" />
       </header>
+      {toastVisible && <ToastMessage>클립보드에 복사되었습니다</ToastMessage>}
       <ChatBox>
-        {chat.map((msg, index) => {
-          const isServerMessage = msg.sender === 'server';
-          return (
-            <div
-              key={index}
-              className={`chat-message ${
-                isServerMessage ? 'server-message' : 'user-message'
-              }`}
-              onClick={() => handleChatMessageClick(msg)}
-            >
-              {msg.text}
-            </div>
-          );
-        })}
+        {chat.map((msg, index) => (
+          <div
+            key={index}
+            className={`chat-message ${
+              msg.sender === 'server' ? 'server-message' : 'user-message'
+            }`}
+            style={{
+              backgroundColor: msg === selectedMessage ? '#37392E' : undefined,
+              color: msg === selectedMessage ? 'white' : undefined,
+            }}
+            onClick={() => handleChatMessageClick(msg)}
+          >
+            {msg.text}
+          </div>
+        ))}
       </ChatBox>
       <FoldableArea isFolded={isFolded}>
         <FoldBar
@@ -112,8 +160,16 @@ const BlessingQnaResult = () => {
               <>
                 <ShareOptions>
                   <div className="imgGroups">
-                    <img src="/assets/kakao.svg" alt="Share option 1" />
-                    <img src="/assets/clipboard.svg" alt="Share option 2" />
+                    <img
+                      src="/assets/kakao.svg"
+                      alt="Share option 1"
+                      onClick={handleKakaoClick}
+                    />
+                    <img
+                      src="/assets/clipboard.svg"
+                      alt="Share option 2"
+                      onClick={handleCopyClick}
+                    />
                   </div>
                   <p>
                     <span>공유 방식</span>을 선택하세요
@@ -154,21 +210,27 @@ const ChatBox = styled.div`
   flex-grow: 1;
   transition: all 0.5s ease-in-out;
   overflow-y: auto;
-  box-shadow: inset 0 0 0 3px red;
   .chat-message {
     padding: 10px;
     margin-bottom: 10px;
     border-radius: 5px;
   }
   .server-message {
+    width: 520px;
     background-color: #f2f2f2;
     color: black;
-    margin-left: auto;
+    margin-right: auto;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+    padding: 30px 40px;
+    font-size: 26px;
+    line-height: 30px;
   }
   .user-message {
     background-color: var(--main-color);
     color: white;
-    margin-right: auto;
+    margin-left: auto;
   }
 `;
 
@@ -177,7 +239,7 @@ const FoldableArea = styled.div`
   overflow: hidden;
   transition: height 0.5s ease-in-out;
   height: ${(props) => (props.isFolded ? '50px' : '500px')};
-  background: linear-gradient(to bottom, white, #fee8e1);
+  background: #fef0ea;
   text-align: center;
   p {
     color: #979393;
@@ -262,10 +324,11 @@ const ShareOptions = styled.div`
     gap: 20px;
   }
   img {
-    width: 40px;
-    height: 40px;
+    width: 60px;
+    height: 60px;
     object-fit: cover;
     margin-bottom: 15px;
+    cursor: pointer;
   }
   p {
     color: black;
@@ -279,7 +342,18 @@ const BackBtn = styled.button`
   background-color: var(--main-color);
   color: white;
   padding: 5px 10px;
-  font-size: 28px;
+  font-size: 24px;
   border-radius: 10px;
   margin-bottom: 15px;
+`;
+
+const ToastMessage = styled.div`
+  position: fixed;
+  top: 180px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #37392e;
+  color: #fff;
+  padding: 10px 30px;
+  border-radius: 5px;
 `;

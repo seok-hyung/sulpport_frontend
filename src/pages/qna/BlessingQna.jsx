@@ -105,14 +105,12 @@ const BlessingQna = () => {
     q4InputValue,
     q5Value,
   ]);
-  console.log(formData);
-
   const [isLoading, setIsLoading] = useState(false);
   const goToQnaResult = () => {
     setIsLoading(true); // 로딩 시작
     postBlessingMent(formData).then((res) => {
       setIsLoading(false); // 로딩 종료
-      navigate('/blessingQnaResult', { state: res });
+      navigate('/blessingQnaResult', { state: { res, formData } });
     });
   };
   return (
