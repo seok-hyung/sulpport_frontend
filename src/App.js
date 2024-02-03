@@ -7,6 +7,8 @@ import BlessingQnaResult from './pages/qna/BlessingQnaResult';
 import MoneyPresent from './pages/MoneyPresent';
 import MoneyQna from './pages/qna/MoneyQna';
 import PresentQna from './pages/qna/PresentQna';
+import MoneyQnaResult from './pages/qna/MoneyQnaResult';
+import Knowledge from './pages/Knowledge';
 
 function App() {
   return (
@@ -17,7 +19,9 @@ function App() {
       <Route path="/blessingQnaResult" element={<BlessingQnaResult />} />
       <Route path="/moneyPresent" element={<MoneyPresent />} />
       <Route path="/moneyQna" element={<MoneyQna />} />
+      <Route path="/moneyQnaResult" element={<MoneyQnaResult />} />
       <Route path="/presentQna" element={<PresentQna />} />
+      <Route path="/knowledge" element={<Knowledge />} />
     </Routes>
   );
 }
