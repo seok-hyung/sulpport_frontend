@@ -25,4 +25,7 @@ module.exports = {
     'no-unused-vars': 1,
     'react/prop-types': 'off',
   },
-}
+  globals: {
+    Kakao: true,
+  },
+};
