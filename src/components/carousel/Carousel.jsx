@@ -50,10 +50,12 @@ const Carousel = () => {
 export default Carousel;
 
 const CarouselSection = styled.section`
-  padding: 10px 30px;
+  width: 1300px;
+
   position: relative;
   display: flex;
   height: 300px;
+  margin: 0 auto;
   .img-container {
     position: relative;
     width: 100%;
@@ -70,8 +72,7 @@ const CarouselContent = styled.div`
   padding: 40px;
   box-sizing: border-box;
   transition: transform ease-out 0.5s;
-  transform: ${(props) =>
-    `translateX(${(props.index - props.currentIndex) * 100}%)`};
+  transform: ${(props) => `translateX(${(props.index - props.currentIndex) * 100}%)`};
   h2 {
     font-size: 30px;
     margin-bottom: 20px;
