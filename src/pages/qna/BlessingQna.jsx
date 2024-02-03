@@ -40,7 +40,7 @@ const BlessingQna = () => {
   //q3
   const [q3SelectedOption, setQ3SelectedOption] = useState('');
   const [q3InputValue, setQ3InputValue] = useState('');
-  const q3Options = ['부모', '자녀', '친척', '직장동료', '직장 상사', '친구'];
+  const q3Options = ['부모', '자녀', '친척', '직장 동료', '직장 상사', '친구'];
   const q3HandleSelect = (value) => {
     if (q3SelectedOption === value) {
       setQ3SelectedOption('');
@@ -83,8 +83,11 @@ const BlessingQna = () => {
     // 처리가 끝나면 setIsLoading(false)
   };
   //q7
+  // ! 추가 작업 필요
+  // 5개 질문지 답 정보들을 모아서 서버에 요청보내며, 결과페이지로 이동하는 함수
   const goToQnaResult = () => {
     navigate('/blessingQnaResult');
+    // api 요청 코드
   };
   return (
     <QnaWrapper>
@@ -316,10 +319,16 @@ const LoadingComponent = ({
 
   return (
     <div className="q6LoadingDiv">
-      <img src="/assets/loading-orange.svg" alt="Loading" />
+      <img src="/assets/loading-card-orange.svg" alt="Loading" />
       <div className="txtDiv">
         <strong>{q4SelectedOption || q4InputValue}</strong>(인)하는{' '}
-        <strong>{q5Value}대</strong>{' '}
+        <strong>
+          {q5Value === 0 || q5Value === '0'
+            ? '10대 미만'
+            : q5Value === '70'
+            ? '70대 이상'
+            : `${q5Value}대`}
+        </strong>{' '}
         <strong>
           <strong>{q3SelectedOption || q3InputValue}</strong> &quot;{name}&quot;
         </strong>
@@ -464,13 +473,14 @@ const QnaWrapper = styled.div`
     flex-direction: column;
     font-size: 32px;
     img {
-      margin-top: 150px;
-      width: 300px;
+      margin-top: 120px;
+      width: 250px;
     }
 
     .txtDiv {
-      margin-top: 20px;
+      margin-top: 40px;
       text-align: center;
+      line-height: 70px;
       h2 {
         font-size: 40px;
         font-weight: 700;
@@ -488,13 +498,13 @@ const QnaWrapper = styled.div`
     flex-direction: column;
     font-size: 32px;
     img {
-      margin-top: 150px;
-      width: 300px;
+      margin-top: 120px;
+      width: 250px;
     }
     .txtDiv {
       margin-top: 20px;
       text-align: center;
-      line-height: 60px;
+      line-height: 70px;
       h2 {
         font-size: 44px;
         font-weight: 900;
