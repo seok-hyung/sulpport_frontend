@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { styled } from 'styled-components';
 import NavBtns from '../../components/common/navBtns/NavBtns';
 import { useNavigate } from 'react-router-dom';
+import { postBlessingMent } from '../../api/postBlessingMent';
 
 const BlessingQna = () => {
   const navigate = useNavigate();
@@ -85,9 +86,42 @@ const BlessingQna = () => {
   //q7
   // ! 추가 작업 필요
   // 5개 질문지 답 정보들을 모아서 서버에 요청보내며, 결과페이지로 이동하는 함수
+  const [formData, setFormData] = useState({
+    name: name,
+    tone: selectedOptions,
+    relations: q3SelectedOption || q3InputValue,
+    situation: q4SelectedOption || q4InputValue,
+    ageGroup: q5Value,
+    formality: '반말의',
+  });
+
+  useEffect(() => {
+    setFormData({
+      name: name,
+      tone: selectedOptions,
+      relations: q3SelectedOption || q3InputValue,
+      situation: q4SelectedOption || q4InputValue,
+      ageGroup: q5Value,
+      formality: '반말의',
+    });
+  }, [
+    name,
+    selectedOptions,
+    q3SelectedOption,
+    q3InputValue,
+    q4SelectedOption,
+    q4InputValue,
+    q5Value,
+  ]);
+  console.log(formData);
+
   const goToQnaResult = () => {
     navigate('/blessingQnaResult');
     // api 요청 코드
+    postBlessingMent(formData).then((res) => {
+      console.log('서버 성공!');
+      console.log(res);
+    });
   };
   return (
     <QnaWrapper>
@@ -313,7 +347,7 @@ const LoadingComponent = ({
   useEffect(() => {
     const timeout = setTimeout(() => {
       setQuestion((prevQuestion) => prevQuestion + 1);
-    }, 4000);
+    }, 1000);
     return () => clearTimeout(timeout);
   }, []);
 
