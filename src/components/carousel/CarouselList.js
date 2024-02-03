@@ -1,5 +1,20 @@
 export const carouselList = [
-  { id: 1, title: '덕담 가이드', text: '더미 텍스트', bgColor: '#ddcecd' },
-  { id: 2, title: '용돈/선물 추천', text: '더미 텍스트', bgColor: 'lightgray' },
-  { id: 3, title: '설날 상식백과', text: '더미 텍스트', bgColor: '#D6D6D6' },
+  {
+    id: 1,
+    url: '/assets/long1.svg',
+    tags: '#전통차례 #설날_상식백과',
+    txt: '차례가 뭐야?',
+  },
+  {
+    id: 2,
+    url: '/assets/long2.svg',
+    tags: '#전통차례 #설날_상식백과',
+    txt: '제사상 음식 배치',
+  },
+  {
+    id: 3,
+    url: '/assets/long3.svg',
+    tags: '#전통차례 #설날_상식백과',
+    txt: '차례 지내는 순서',
+  },
 ];
