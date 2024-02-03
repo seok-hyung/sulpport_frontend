@@ -12,7 +12,8 @@ const GlobalStyled = createGlobalStyle`
 
   ${reset}
   :root {
-    --main-color : #fc764a;
+    --main-color : #fc6736;
+    --sub-color:#3EB7B8;
     --main-disabled-color: #767676;
     --main-text-color : #333333; 
     --sub-text-color : #C4C4C4;
@@ -22,12 +23,15 @@ const GlobalStyled = createGlobalStyle`
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    -webkit-user-drag: none;
+    -moz-user-drag: none;
+    -ms-use-drag: none;
 
   }
   html,
   body{
   width:100%;
-  overflow-x:hidden;
+  
   }
   ul, ol, li {
         list-style: none;
@@ -44,7 +48,8 @@ const GlobalStyled = createGlobalStyle`
   body{
     font-family: 'SUITE-Regular';
     font-weight: 400;
-    overflow-y: hidden;
+    /* overflow-y: hidden; */
+    
   }
 
   button{
