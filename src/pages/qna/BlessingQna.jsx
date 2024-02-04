@@ -323,19 +323,6 @@ const BlessingQna = () => {
             <button onClick={goToQnaResult}>덕담 보러가기</button>
           </div>
         ))}
-
-      {/* {question === 7 && (
-        <div className="q7ResultDiv">
-          <img src="/assets/pocket.svg" alt="주머니 이미지" />
-          <div className="txtDiv">
-            <h2>덕담이 생성되었어요!</h2>
-            <p>
-              다음 페이지에서 <span>나만의 맞춤형 덕담</span>을 확인해보세요.
-            </p>
-          </div>
-          <button onClick={goToQnaResult}>덕담 보러가기</button>
-        </div>
-      )} */}
     </QnaWrapper>
   );
 };

@@ -9,7 +9,7 @@ const MoneyQnaResult = () => {
   const response = location.state.choices[0].message.content;
   const [chat, setChat] = useState([]);
   const [selectedMessage, setSelectedMessage] = useState('');
-  const [isShareActive, setIsShareActive] = useState(false);
+  const [isCopyActive, setIsCopyActive] = useState(false);
   const navigate = useNavigate();
 
   // 다시 답변 받는 함수
@@ -32,10 +32,10 @@ const MoneyQnaResult = () => {
   const handleChatMessageClick = (msg) => {
     if (msg.sender === 'server') {
       if (selectedMessage === msg) {
-        setIsShareActive(false);
+        setIsCopyActive(false);
         setSelectedMessage(null);
       } else {
-        setIsShareActive(true);
+        setIsCopyActive(true);
         setSelectedMessage(msg);
       }
     }
@@ -43,9 +43,10 @@ const MoneyQnaResult = () => {
 
   // 추천금액 복사하기
   const [toastVisible, setToastVisible] = useState(false);
+
   const handleCopyClick = () => {
-    if (selectedMessage) {
-      // selectedMessage가 존재하는지 확인
+    if (isCopyActive) {
+      setIsCopyActive(true);
       const amount = selectedMessage.text.match(/\d+/g).join('');
       navigator.clipboard.writeText(amount);
       setToastVisible(true);
@@ -79,9 +80,9 @@ const MoneyQnaResult = () => {
       </ChatBox>
       {toastVisible && <ToastMessage>클립보드에 복사되었습니다</ToastMessage>}
       <BtnSection>
-        <button onClick={handleCopyClick} disabled={!selectedMessage}>
+        <CopyButton onClick={handleCopyClick} isActive={isCopyActive}>
           추천 금액 복사하기
-        </button>
+        </CopyButton>
         <button
           onClick={() => {
             navigate('/moneyQna');
@@ -97,7 +98,6 @@ const MoneyQnaResult = () => {
 export default MoneyQnaResult;
 
 const Wrapper = styled.div`
-  box-shadow: 0 0 0 10px orange;
   display: flex;
   flex-direction: column;
   height: 100vh;
@@ -167,6 +167,7 @@ const BtnSection = styled.section`
   }
   button:last-of-type {
     background-color: #417f95;
+    margin-bottom: 40px;
   }
 `;
 
@@ -179,4 +180,12 @@ const ToastMessage = styled.div`
   color: #fff;
   padding: 10px 30px;
   border-radius: 5px;
+`;
+const CopyButton = styled.button`
+  background-color: ${(props) => (props.isActive ? 'var(--main-color)' : '#b5b5b5')};
+  color: white;
+  padding: 5px 10px;
+  font-size: 28px;
+  border-radius: 10px;
+  margin-bottom: 15px;
 `;

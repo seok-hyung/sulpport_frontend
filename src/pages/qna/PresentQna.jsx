@@ -2,20 +2,20 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import NavBtns from '../../components/common/navBtns/NavBtns';
-import { postMoneyValue } from '../../api/postMoneyValue';
+import { postPresent } from '../../api/postPresent';
 
 const PresentQna = () => {
   const navigate = useNavigate();
   //q1 이름
   const [question, setQuestion] = useState(1);
-  const [progress, setProgress] = useState(16);
+  const [progress, setProgress] = useState(15);
   const [name, setName] = useState('');
   const nameInputChange = (e) => {
     setName(e.target.value);
   };
   const previousQuestion = () => {
     if (progress > 0) {
-      setProgress(progress - 16.5);
+      setProgress(progress - 14.5);
     }
     if (question > 1) {
       setQuestion(question - 1);
@@ -23,7 +23,7 @@ const PresentQna = () => {
   };
   const nextQuestion = () => {
     setQuestion(question + 1);
-    setProgress(progress + 16.5);
+    setProgress(progress + 14.5);
   };
 
   //q2 관계
@@ -68,7 +68,7 @@ const PresentQna = () => {
     '장식품',
     '응원',
   ];
-  const [categoryInputValue, setCategoryInputValue] = useState('');
+  //?  const [categoryInputValue, setCategoryInputValue] = useState(''); 추후 추가할 예정
 
   const handleCategorySelect = (value) => {
     if (categorys.includes(value)) {
@@ -100,10 +100,10 @@ const PresentQna = () => {
 
   const goToQnaResult = () => {
     setIsLoading(true); // 로딩 시작
-    postMoneyValue(formData).then((res) => {
+    postPresent(formData).then((res) => {
       setTimeout(() => {
         setIsLoading(false); // 로딩 종료
-        navigate('/presentQnaResult', { state: res });
+        navigate('/presentQnaResult', { state: { res, name } });
       }, 2000);
     });
   };
@@ -112,6 +112,9 @@ const PresentQna = () => {
     name: name,
     relations: relation || relationInputValue,
     ageGroup: age,
+    priceRange: price,
+    category: categorys,
+    situation: situation,
   });
 
   useEffect(() => {
@@ -119,8 +122,12 @@ const PresentQna = () => {
       name: name,
       relations: relation || relationInputValue,
       ageGroup: age,
+      priceRange: price,
+      category: categorys,
+      situation: situation,
     });
-  }, [name, relation, relationInputValue, age]);
+  }, [name, relation, relationInputValue, age, price, categorys, situation]);
+
   return (
     <QnaWrapper>
       <header>
@@ -251,7 +258,7 @@ const PresentQna = () => {
             <p>
               Q4 선물의 가격대는
               <strong>
-                {price === 1 || price === '1'
+                {price === 0 || price === '0'
                   ? '만원대'
                   : price === '50'
                   ? '50만원대 이상'
@@ -322,9 +329,9 @@ const PresentQna = () => {
       {/* 상황 */}
       {question === 6 && (
         <>
-          <div className="qDiv q4Div">
+          <div className="qDiv q6Div">
             <p>
-              Q4 <strong>{name}</strong>의 상황은?
+              Q6 <strong>{name}</strong>의 현재상황은?
             </p>
             <OptionList>
               {situationOptions.map((value, index) => (
@@ -368,15 +375,18 @@ const PresentQna = () => {
             relationInputValue={relationInputValue}
             age={age}
             color={'var(--sub-color)'}
+            situation={situation}
+            price={price}
+            categorys={categorys}
           />
         ) : (
           <div className="resultDiv">
-            <img src="/assets/falling-money.svg" alt="돈 이미지" />
+            <img src="/assets/present.svg" alt="선물 이미지" />
             <div className="txtDiv">
-              <h2>적당한 금액을 찾았어요!</h2>
-              <p>다음 페이지에서 딱 맞는 용돈 금액을 확인해보세요.</p>
+              <h2>좋은 선물을 찾았어요!</h2>
+              <p>다음 페이지에서 맞춤 선물을 확인해보세요.</p>
             </div>
-            <button onClick={goToQnaResult}>용돈 추천 결과</button>
+            <button onClick={goToQnaResult}>선물 추천 결과</button>
           </div>
         ))}
     </QnaWrapper>
@@ -385,7 +395,15 @@ const PresentQna = () => {
 
 export default PresentQna;
 
-const LoadingComponent = ({ name, relation, relationInputValue, age }) => {
+const LoadingComponent = ({
+  name,
+  relation,
+  relationInputValue,
+  age,
+  situation,
+  price,
+  categorys,
+}) => {
   return (
     <div className="loadingDiv">
       <img src="/assets/loading-card-blue.svg" alt="Loading" />
@@ -396,12 +414,22 @@ const LoadingComponent = ({ name, relation, relationInputValue, age }) => {
             : age === '70'
             ? '70대 이상'
             : `${age}대`}
-        </strong>{' '}
+        </strong>
+        인<strong>{situation}</strong>인
         <strong>
           <strong>{relation || relationInputValue}</strong> &quot;{name}&quot;
         </strong>
-        님에게 보낼 용돈
-        <p>적당한 금액을 찾는중...</p>
+        님에게 보낼
+        <br />
+        <strong>
+          {price === 0 || price === '0'
+            ? '만원대'
+            : price === '50'
+            ? '50만원대 이상'
+            : `${price}만원대`}
+        </strong>
+        의 <strong>{categorys.join(', ')}</strong> 선물
+        <p>적합한 선물을 찾는중...</p>
       </div>
     </div>
   );
@@ -524,6 +552,15 @@ const QnaWrapper = styled.div`
       margin-bottom: 60px;
     }
   }
+  /* 현재 상황 */
+  .q6Div {
+    input {
+      background-color: #dccfcd;
+    }
+    img {
+      width: 40px;
+    }
+  }
 
   .loadingDiv {
     display: flex;
@@ -605,7 +642,7 @@ const OptionItem = styled.li`
   border-radius: 20px;
   display: flex;
   justify-content: center;
-  gap: 10px;
+  gap: 20px;
   align-items: center;
   cursor: pointer;
   &:hover {
