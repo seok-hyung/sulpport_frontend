@@ -1,5 +1,5 @@
 export const postBlessingMent = async (formData) => {
-  const res = await fetch(`http://223.130.141.68:8010/recommendation/greetings`, {
+  const res = await fetch(`https://sulpport-backend.site/recommendation/greetings`, {
     method: 'POST',
     body: JSON.stringify(formData),
     headers: {

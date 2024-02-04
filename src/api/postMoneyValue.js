@@ -1,5 +1,5 @@
 export const postMoneyValue = async (formData) => {
-  const res = await fetch(`http://223.130.141.68:8010/recommendation/money`, {
+  const res = await fetch(`https://sulpport-backend.site/recommendation/money`, {
     method: 'POST',
     body: JSON.stringify(formData),
     headers: {
