@@ -6,6 +6,7 @@ const Header = () => {
   const [isInputOpen, setIsInputOpen] = useState(false);
   const [searchValue, setSearchValue] = useState('');
   const [searchIcon, setSearchIcon] = useState('/assets/search-icon.svg');
+
   const handleSearchClick = () => {
     setIsInputOpen(!isInputOpen);
     setSearchIcon(
@@ -48,8 +49,8 @@ export default Header;
 
 const HeaderWrapper = styled.header`
   .headerUl {
-    width: 1300px;
-    margin: 60px auto 0 auto;
+    width: 1100px;
+    margin: 40px auto 0 auto;
     display: flex;
     justify-content: space-between;
     align-items: center;
