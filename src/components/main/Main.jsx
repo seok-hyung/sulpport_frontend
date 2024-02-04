@@ -5,8 +5,6 @@ import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { informationList } from './informationList';
 import { useEffect } from 'react';
-import { useSwipeable } from 'react-swipeable';
-import Draggable from 'react-draggable';
 
 const Main = () => {
   const navitgate = useNavigate();
