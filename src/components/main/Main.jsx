@@ -316,6 +316,7 @@ const ChalyeSection = styled.section`
   @media (max-width: 768px) {
     width: 100%;
     padding: 0 20px;
+    margin: 60px auto 0 auto;
   }
   .chlyeHeaderDiv {
     display: flex;
@@ -509,10 +510,10 @@ const CardCarousel = () => {
 const CarouselContainerDiv = styled.div`
   position: relative;
   width: 1300px;
-  margin: 40px auto 0 auto;
+  margin: 60px auto 0 auto;
   @media (max-width: 768px) {
-    margin-top: 0px;
-    width: 690px;
+    margin-top: 40px;
+    width: 100%;
   }
   .img-container {
     position: relative;
@@ -560,6 +561,9 @@ const CarouselItem = styled.div`
   min-width: ${(props) =>
     props.windowDimensions >= 768 ? 'calc(25% - 15px)' : 'calc(33.33% - 20px)'};
   height: 500px;
+  @media (max-width: 768px) {
+    height: 300px;
+  }
   margin-right: 90px;
   transition: transform 0.5s ease-out;
   &:last-child {

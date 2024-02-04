@@ -35,16 +35,6 @@ const Carousel = () => {
     setMouseDown(false);
   };
 
-  const moveSlide = (direction) => {
-    if (direction === 'prev') {
-      const prevIndex = currentIndex - 1 < 0 ? items.length - 1 : currentIndex - 1;
-      setCurrentIndex(prevIndex);
-    } else if (direction === 'next') {
-      const nextIndex = (currentIndex + 1) % items.length;
-      setCurrentIndex(nextIndex);
-    }
-  };
-
   const handleMouseMove = (e) => {
     if (!mouseDown) return;
     e.preventDefault();
@@ -53,14 +43,30 @@ const Carousel = () => {
     e.currentTarget.scrollLeft = scrollLeft - walk;
   };
 
+  const moveSlide = (direction, walk) => {
+    if (direction === 'prev') {
+      const prevIndex =
+        currentIndex - Math.ceil(walk / carouselWidth) < 0
+          ? items.length - 1
+          : currentIndex - Math.ceil(walk / carouselWidth);
+      setCurrentIndex(prevIndex);
+    } else if (direction === 'next') {
+      const nextIndex = (currentIndex + Math.ceil(walk / carouselWidth)) % items.length;
+      setCurrentIndex(nextIndex);
+    }
+  };
+
   const handleMouseUp = (e) => {
     setMouseDown(false);
     const x = e.pageX - e.currentTarget.offsetLeft;
     const walk = (x - startX) * (carouselWidth / window.innerWidth);
-    if (walk > 0) {
-      moveSlide('prev');
-    } else {
-      moveSlide('next');
+
+    if (Math.abs(walk) >= 200) {
+      if (walk > 0) {
+        moveSlide('prev', walk);
+      } else {
+        moveSlide('next', walk);
+      }
     }
   };
 
@@ -113,7 +119,7 @@ const CarouselSection = styled.section`
   height: 300px;
   margin: 0 auto;
   @media (max-width: 768px) {
-    width: 700px;
+    width: 680px;
   }
   .img-container {
     position: relative;
