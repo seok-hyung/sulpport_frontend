@@ -8,7 +8,7 @@ const MoneyPresent = () => {
     <PresentWrapper>
       <header className="topImg">
         <img src="/assets/present-bird.svg" alt="포켓 든 드래곤" />
-        <img src="/assets/present-txt.svg" alt="덕담 헤더 텍스트" />
+        <img src="/assets/presentMoney-txt.svg" alt="덕담 헤더 텍스트" />
       </header>
       <main>
         <div className="classifyBtns">

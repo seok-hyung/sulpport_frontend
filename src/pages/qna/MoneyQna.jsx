@@ -2,19 +2,20 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import NavBtns from '../../components/common/navBtns/NavBtns';
+import { postMoneyValue } from '../../api/postMoneyValue';
 
 const MoneyQna = () => {
   const navigate = useNavigate();
-  //q1
+  //q1 이름
   const [question, setQuestion] = useState(1);
-  const [progress, setProgress] = useState(20);
+  const [progress, setProgress] = useState(33.3);
   const [name, setName] = useState('');
-  const handleInputChange = (e) => {
+  const nameInputChange = (e) => {
     setName(e.target.value);
   };
   const previousQuestion = () => {
     if (progress > 0) {
-      setProgress(progress - 20);
+      setProgress(progress - 33.5);
     }
     if (question > 1) {
       setQuestion(question - 1);
@@ -22,72 +23,57 @@ const MoneyQna = () => {
   };
   const nextQuestion = () => {
     setQuestion(question + 1);
-    setProgress(progress + 20);
+    setProgress(progress + 33.3);
   };
 
-  //q2
-  const [selectedOptions, setSelectedOptions] = useState([]);
-  const q2Options = ['응원하는', '위로하는', '정중한', '부드러운', '반말', '존댓말'];
-  const handleSelect = (value) => {
-    if (selectedOptions.includes(value)) {
-      setSelectedOptions(selectedOptions.filter((option) => option !== value));
-    } else if (selectedOptions.length < 3) {
-      setSelectedOptions([...selectedOptions, value]);
-    }
-  };
-
-  //q3
-  const [q3SelectedOption, setQ3SelectedOption] = useState('');
-  const [q3InputValue, setQ3InputValue] = useState('');
+  //q2 관계
+  const [relation, setRelation] = useState('');
+  const [relationInputValue, setRelationInputValue] = useState('');
   const q3Options = ['부모', '자녀', '친척', '직장 동료', '직장 상사', '친구'];
-  const q3HandleSelect = (value) => {
-    if (q3SelectedOption === value) {
-      setQ3SelectedOption('');
+  const handleRelation = (value) => {
+    if (relation === value) {
+      setRelation('');
     } else {
-      setQ3SelectedOption(value);
+      setRelation(value);
     }
   };
-  const q3HandleInputChange = (e) => {
-    setQ3InputValue(e.target.value);
-    setQ3SelectedOption('');
+  const relationInputChange = (e) => {
+    setRelationInputValue(e.target.value);
+    setRelation('');
   };
 
-  //q4
-  const [q4SelectedOption, setQ4SelectedOption] = useState('');
-  const [q4InputValue, setQ4InputValue] = useState('');
-  const q4Options = ['취업준비', '공부중', '시험합격', '이사 계획', '여행 중'];
-  const q4ImgNames = ['studying', 'books', 'hundred', 'truck', 'airplane'];
-  const q4HandleSelect = (value) => {
-    if (q4SelectedOption === value) {
-      setQ4SelectedOption('');
-    } else {
-      setQ4SelectedOption(value);
-    }
-  };
-  const q4HandleInputChange = (e) => {
-    setQ4InputValue(e.target.value);
-    setQ4SelectedOption('');
+  //q3 나이
+  const [age, setAge] = useState(0);
+  const ageInputChange = (e) => {
+    setAge(e.target.value);
   };
 
-  //q5
-  const [q5Value, setQ5Value] = useState(0);
-  const q5HandleChange = (e) => {
-    setQ5Value(e.target.value);
-  };
-  // loading
+  // 로딩
   const [isLoading, setIsLoading] = useState(false);
-  const handleSubmit = () => {
-    setIsLoading(true);
-    // 제출 처리 코드
-    // 처리가 끝나면 setIsLoading(false)
-  };
-  //q7
-  // ! 추가 작업 필요
-  // 5개 질문지 답 정보들을 모아서 서버에 요청보내며, 결과페이지로 이동하는 함수
+
   const goToQnaResult = () => {
-    navigate('/blessingQnaResult');
-    // api 요청 코드
+    setIsLoading(true); // 로딩 시작
+    postMoneyValue(formData).then((res) => {
+      setTimeout(() => {
+        setIsLoading(false); // 로딩 종료
+        navigate('/moneyQnaResult', { state: res });
+      }, 2000);
+    });
   };
+
+  const [formData, setFormData] = useState({
+    name: name,
+    relations: relation || relationInputValue,
+    ageGroup: age,
+  });
+
+  useEffect(() => {
+    setFormData({
+      name: name,
+      relations: relation || relationInputValue,
+      ageGroup: age,
+    });
+  }, [name, relation, relationInputValue, age]);
   return (
     <QnaWrapper>
       <header>
@@ -100,16 +86,17 @@ const MoneyQna = () => {
         </ProgressBar>
       )}
 
+      {/* q1 이름 */}
       {question === 1 && (
         <>
           <div className="qDiv q1Div">
             <div className="q1Contents">
-              <p>Q1 덕담을 받을 사람은?</p>
+              <p>Q1 용돈을 받을 사람은?</p>
               <input
                 type="text"
                 value={name}
                 placeholder="이름을 입력해주세요."
-                onChange={handleInputChange}
+                onChange={nameInputChange}
               />
               <small className="skip" onClick={nextQuestion}>
                 건너뛰기
@@ -121,50 +108,25 @@ const MoneyQna = () => {
             nextQuestion={nextQuestion}
             isNextDisabled={!name}
             question={question}
+            nextButtonIcon={`/assets/arrow-right-subcolor.svg`}
+            color={'var(--sub-color)'}
           />
         </>
       )}
 
+      {/* q2 관계 */}
       {question === 2 && (
         <>
           <div className="qDiv q2Div">
             <p>
-              Q2 <strong>{name}</strong>에게 덕담을 하는 나의 <strong>어조</strong>는?
-            </p>
-            <small>최대 3개를 선택할 수 있어요</small>
-            <OptionList>
-              {q2Options.map((value) => (
-                <OptionItem
-                  key={value}
-                  selected={selectedOptions.includes(value)}
-                  onClick={() => handleSelect(value)}
-                >
-                  {value}
-                </OptionItem>
-              ))}
-            </OptionList>
-          </div>
-          <NavBtns
-            previousQuestion={previousQuestion}
-            nextQuestion={nextQuestion}
-            isNextDisabled={selectedOptions.length < 1}
-            question={question}
-          />
-        </>
-      )}
-
-      {question === 3 && (
-        <>
-          <div className="qDiv q3Div">
-            <p>
-              Q3 <strong>{name}</strong>(와)과의 관계는?
+              Q2 <strong>{name}</strong>(와)과의 관계는?
             </p>
             <OptionList>
               {q3Options.map((value) => (
                 <OptionItem
                   key={value}
-                  selected={q3SelectedOption === value}
-                  onClick={() => q3HandleSelect(value)}
+                  selected={relation === value}
+                  onClick={() => handleRelation(value)}
                 >
                   {value}
                 </OptionItem>
@@ -172,67 +134,34 @@ const MoneyQna = () => {
             </OptionList>
             <input
               type="text"
-              value={q3InputValue}
+              value={relationInputValue}
               placeholder="직접 입력할 수 있어요"
-              onChange={q3HandleInputChange}
+              onChange={relationInputChange}
             />
           </div>
           <NavBtns
             previousQuestion={previousQuestion}
             nextQuestion={nextQuestion}
-            isNextDisabled={!q3SelectedOption && !q3InputValue}
+            isNextDisabled={!relation && !relationInputValue}
             question={question}
+            nextButtonIcon={`/assets/arrow-right-subcolor.svg`}
+            color={'var(--sub-color)'}
           />
         </>
       )}
 
-      {question === 4 && (
+      {/* q3 나이 */}
+      {question === 3 && (
         <>
-          <div className="qDiv q4Div">
+          <div className="qDiv q3Div">
             <p>
-              Q4 <strong>{name}</strong>의 상황은?
-            </p>
-            <OptionList>
-              {q4Options.map((value, index) => (
-                <OptionItem
-                  key={value}
-                  selected={q4SelectedOption === value}
-                  onClick={() => q4HandleSelect(value)}
-                >
-                  <img
-                    src={`/assets/${q4ImgNames[index]}-icon.svg`}
-                    alt="상황 이미지들"
-                  />
-                  {value}
-                </OptionItem>
-              ))}
-            </OptionList>
-            <input
-              type="text"
-              placeholder="직접 입력할 수 있어요"
-              onChange={q4HandleInputChange}
-            />
-          </div>
-          <NavBtns
-            previousQuestion={previousQuestion}
-            nextQuestion={nextQuestion}
-            isNextDisabled={!q4SelectedOption && !q4InputValue}
-            question={question}
-          />
-        </>
-      )}
-
-      {question === 5 && (
-        <>
-          <div className="qDiv q5Div">
-            <p>
-              Q5 <strong>{name}</strong>(은)는 &nbsp;
+              Q3 <strong>{name}</strong>(은)는 &nbsp;
               <strong>
-                {q5Value === 0 || q5Value === '0'
+                {age === 0 || age === '0'
                   ? '10대 미만'
-                  : q5Value === '70'
+                  : age === '70'
                   ? '70대 이상'
-                  : `${q5Value}대`}
+                  : `${age}대`}
               </strong>
               (이)다.
             </p>
@@ -242,8 +171,8 @@ const MoneyQna = () => {
               min="0"
               max="70"
               step="10"
-              value={q5Value}
-              onChange={q5HandleChange}
+              value={age}
+              onChange={ageInputChange}
             />
             <Scale>
               <div>0</div>
@@ -259,81 +188,59 @@ const MoneyQna = () => {
           <NavBtns
             previousQuestion={previousQuestion}
             nextQuestion={nextQuestion}
-            isNextDisabled={!q5Value}
+            isNextDisabled={!age}
             question={question}
             nextButtonClassName="nextButton"
             nextButtonText="제출하기"
             nextButtonIcon="/assets/arrow-right-white-icon.svg"
+            backgroundColor={'var(--sub-color)'}
+            color={'var(--sub-color)'}
           />
         </>
       )}
 
-      {question === 6 && (
-        <LoadingComponent
-          name={name}
-          setQuestion={setQuestion}
-          selectedOptions={selectedOptions}
-          q3SelectedOption={q3SelectedOption}
-          q3InputValue={q3InputValue}
-          q4SelectedOption={q4SelectedOption}
-          q4InputValue={q4InputValue}
-          q5Value={q5Value}
-        />
-      )}
-
-      {question === 7 && (
-        <div className="q7ResultDiv">
-          <img src="/assets/pocket.svg" alt="주머니 이미지" />
-          <div className="txtDiv">
-            <h2>덕담이 생성되었어요!</h2>
-            <p>
-              다음 페이지에서 <span>나만의 맞춤형 덕담</span>을 확인해보세요.
-            </p>
+      {question === 4 &&
+        (isLoading ? (
+          <LoadingComponent
+            name={name}
+            relation={relation}
+            relationInputValue={relationInputValue}
+            age={age}
+            color={'var(--sub-color)'}
+          />
+        ) : (
+          <div className="resultDiv">
+            <img src="/assets/falling-money.svg" alt="돈 이미지" />
+            <div className="txtDiv">
+              <h2>적당한 금액을 찾았어요!</h2>
+              <p>다음 페이지에서 딱 맞는 용돈 금액을 확인해보세요.</p>
+            </div>
+            <button onClick={goToQnaResult}>용돈 추천 결과</button>
           </div>
-          <button onClick={goToQnaResult}>덕담 보러가기</button>
-        </div>
-      )}
+        ))}
     </QnaWrapper>
   );
 };
 
 export default MoneyQna;
 
-const LoadingComponent = ({
-  setQuestion,
-  q4SelectedOption,
-  q4InputValue,
-  q5Value,
-  q3SelectedOption,
-  q3InputValue,
-  name,
-  selectedOptions,
-}) => {
-  useEffect(() => {
-    const timeout = setTimeout(() => {
-      setQuestion((prevQuestion) => prevQuestion + 1);
-    }, 4000);
-    return () => clearTimeout(timeout);
-  }, []);
-
+const LoadingComponent = ({ name, relation, relationInputValue, age }) => {
   return (
-    <div className="q6LoadingDiv">
-      <img src="/assets/loading-card-orange.svg" alt="Loading" />
+    <div className="loadingDiv">
+      <img src="/assets/loading-card-blue.svg" alt="Loading" />
       <div className="txtDiv">
-        <strong>{q4SelectedOption || q4InputValue}</strong>(인)하는{' '}
         <strong>
-          {q5Value === 0 || q5Value === '0'
+          {age === 0 || age === '0'
             ? '10대 미만'
-            : q5Value === '70'
+            : age === '70'
             ? '70대 이상'
-            : `${q5Value}대`}
+            : `${age}대`}
         </strong>{' '}
         <strong>
-          <strong>{q3SelectedOption || q3InputValue}</strong> &quot;{name}&quot;
+          <strong>{relation || relationInputValue}</strong> &quot;{name}&quot;
         </strong>
-        님에게
-        <br /> 보내고 싶은 <strong>{selectedOptions.join(', ')}</strong> 덕담
-        <p>덕담을 만드는 중...</p>
+        님에게 보낼 용돈
+        <p>적당한 금액을 찾는중...</p>
       </div>
     </div>
   );
@@ -349,7 +256,7 @@ const ProgressBar = styled.div`
   .progress {
     width: ${(props) => props.progress}%;
     height: 20px;
-    background-color: #fc764a;
+    background-color: var(--sub-color);
   }
 `;
 const QnaWrapper = styled.div`
@@ -404,7 +311,11 @@ const QnaWrapper = styled.div`
         margin-bottom: 70px;
       }
       input {
-        background-color: var(--sub-color);
+        background-color: white;
+        color: black;
+        &::placeholder {
+          color: #979393;
+        }
       }
       .skip {
         display: block;
@@ -419,8 +330,16 @@ const QnaWrapper = styled.div`
     }
   }
   .q2Div {
+    input {
+      background-color: #dccfcd;
+    }
     p {
       margin-bottom: 30px;
+    }
+  }
+  .q3Div {
+    input {
+      background-color: #dccfcd;
     }
     small {
       font-size: 30px;
@@ -429,43 +348,8 @@ const QnaWrapper = styled.div`
       margin-bottom: 60px;
     }
   }
-  .q3Div {
-    input {
-      background-color: #dccfcd;
-    }
-  }
-  .q4Div {
-    input {
-      background-color: #dccfcd;
-    }
-    img {
-      width: 40px;
-    }
-  }
-  .q5Div {
-    p {
-      font-size: 36px;
-      span {
-        text-decoration: underline;
-        text-decoration-thickness: 3px;
-      }
 
-      strong:last-of-type {
-        text-decoration: underline;
-      }
-    }
-    small {
-      font-size: 24px;
-      color: #bdbdbd;
-      display: block;
-      margin-bottom: 200px;
-    }
-    .range-labels {
-      display: flex;
-      justify-content: space-between;
-    }
-  }
-  .q6LoadingDiv {
+  .loadingDiv {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -490,7 +374,8 @@ const QnaWrapper = styled.div`
       }
     }
   }
-  .q7ResultDiv {
+
+  .resultDiv {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -535,7 +420,7 @@ const OptionList = styled.ul`
 `;
 const OptionItem = styled.li`
   flex-basis: calc(50% - 10px);
-  background-color: ${(props) => (props.selected ? '#fc764a' : 'white')};
+  background-color: ${(props) => (props.selected ? 'var(--sub-color)' : 'white')};
   color: ${(props) => (props.selected ? 'white' : 'black')};
   padding: 20px;
   font-size: 26px;
@@ -548,7 +433,7 @@ const OptionItem = styled.li`
   align-items: center;
   cursor: pointer;
   &:hover {
-    background-color: ${(props) => (props.selected ? 'var()' : '#eee')};
+    background-color: ${(props) => (props.selected ? 'var(--sub-color)' : '#eee')};
   }
 `;
 

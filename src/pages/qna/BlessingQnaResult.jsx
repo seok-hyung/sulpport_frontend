@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { styled } from 'styled-components';
+import { postBlessingMent } from '../../api/postBlessingMent';
 
 const BlessingQnaResult = () => {
   const location = useLocation();
@@ -16,21 +17,21 @@ const BlessingQnaResult = () => {
     나이: false,
   });
 
-  // 채팅 답변 받는 함수
-  const fetchServerResponse = async () => {
-    const response = await fetch('/api/server-response');
-    const data = await response.json();
-    setChat([...chat, data]);
-  };
+  // // 채팅 답변 받는 함수
+  // const fetchServerResponse = async () => {
+  //   postBlessingMent((res)=>{
+  //   })
+  //   const data = await response.json();
+  //   setChat([...chat, data]);
+  // };
+  // const handleRecreate = () => {
+  //   if (Object.values(isActive).some((value) => value)) {
+  //     fetchServerResponse();
+  //   }
+  // };
 
   const handleClick = (button) => {
     setIsActive({ ...isActive, [button]: !isActive[button] });
-  };
-
-  const handleRecreate = () => {
-    if (Object.values(isActive).some((value) => value)) {
-      fetchServerResponse();
-    }
   };
 
   // 덕담 공유하기 버튼
@@ -144,7 +145,7 @@ const BlessingQnaResult = () => {
           </div>
           <div className="btnGroups">
             <EmphasizeBtn
-              onClick={handleRecreate}
+              // onClick={handleRecreate}
               isActive={Object.values(isActive).some((value) => value)}
             >
               강조해서 다시 만들기

@@ -324,7 +324,7 @@ const BlessingQna = () => {
           </div>
         ))}
 
-      {question === 7 && (
+      {/* {question === 7 && (
         <div className="q7ResultDiv">
           <img src="/assets/pocket.svg" alt="주머니 이미지" />
           <div className="txtDiv">
@@ -335,7 +335,7 @@ const BlessingQna = () => {
           </div>
           <button onClick={goToQnaResult}>덕담 보러가기</button>
         </div>
-      )}
+      )} */}
     </QnaWrapper>
   );
 };
@@ -440,7 +440,11 @@ const QnaWrapper = styled.div`
         margin-bottom: 70px;
       }
       input {
-        background-color: var(--main-color);
+        background-color: white;
+        color: black;
+        &::placeholder {
+          color: #979393;
+        }
       }
       .skip {
         display: block;
