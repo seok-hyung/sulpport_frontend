@@ -11,6 +11,10 @@ const Main = () => {
   return (
     <>
       <MainWrapper>
+        <section className="logoNTxt">
+          <img src="/assets/main-logo.svg" alt="메인 로고" />
+          <img src="/assets/main-txt.svg" alt="메인 텍스트" />
+        </section>
         <IntroduceSection>
           <ul className="menusUl">
             <li
@@ -116,6 +120,31 @@ const MainWrapper = styled.main`
   font-size: 24px;
   @media (max-width: 768px) {
     font-size: 16px;
+  }
+  .logoNTxt {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    img:first-of-type {
+      width: 450px;
+      margin-left: 70px;
+      @media (max-width: 768px) {
+        width: 300px;
+      }
+    }
+    img:last-of-type {
+      width: 400px;
+    }
+    @media (max-width: 768px) {
+      img:first-of-type {
+        width: 200px;
+        margin-left: 50px;
+      }
+      img:last-of-type {
+        width: 300px;
+      }
+    }
   }
 `;
 
