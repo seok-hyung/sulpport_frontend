@@ -124,11 +124,7 @@ const MainWrapper = styled.main`
   justify-content: center;
   align-items: center;
   font-size: 24px;
-  .w {
-    width: 440px;
-    height: 20px;
-    box-shadow: inset 0 0 0 3px blue;
-  }
+
   .w2 {
     box-shadow: inset 0 0 0 3px red;
     width: 396px;
@@ -143,6 +139,9 @@ const MainWrapper = styled.main`
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    @media (max-width: 396px) {
+      width: 396px;
+    }
     img:first-of-type {
       width: 450px;
       display: block;
@@ -165,6 +164,7 @@ const IntroduceSection = styled.section`
   margin: 70px auto;
   @media (max-width: 396px) {
     margin: 30px auto;
+    width: 396px;
   }
   .menusUl {
     width: 1300px;
@@ -223,7 +223,7 @@ const TestSection = styled.section`
   width: 1300px;
   margin: 120px auto 0 auto;
   @media (max-width: 396px) {
-    width: 100%;
+    width: 396px;
     margin: 40px auto 0 auto;
     padding: 0 20px;
   }
@@ -323,7 +323,7 @@ const ChalyeSection = styled.section`
   width: 1300px;
   margin: 120px auto 0 auto;
   @media (max-width: 396px) {
-    width: 100%;
+    width: 396px;
     padding: 0 20px;
     margin: 40px auto 0 auto;
   }
@@ -396,6 +396,7 @@ const CarouselContainer = styled.div`
   height: 420px;
   gap: 20px;
   @media (max-width: 396px) {
+    width: 396px;
     height: 160px;
     gap: 10px;
   }

@@ -56,7 +56,7 @@ const HeaderWrapper = styled.header`
     align-items: center;
     margin-bottom: 20px;
     @media (max-width: 396px) {
-      width: 100%;
+      width: 396px;
       padding: 10px 20px;
     }
     img {

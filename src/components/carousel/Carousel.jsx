@@ -72,7 +72,7 @@ const CarouselContainer = styled.div`
   border-radius: 10px;
   position: relative;
   @media (max-width: 396px) {
-    width: 100%;
+    width: 396px;
     height: 200px;
   }
   /* 스크롤 바를 숨김 */
