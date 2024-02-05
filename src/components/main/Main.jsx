@@ -4,7 +4,6 @@ import Carousel from '../carousel/Carousel';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { informationList } from './informationList';
-import { useEffect } from 'react';
 
 const Main = () => {
   const navitgate = useNavigate();
@@ -100,7 +99,13 @@ const Main = () => {
               alt="설날 상식 백과 텍스트"
             />
           </div>
-          <button>더보기</button>
+          <button
+            onClick={() => {
+              navitgate('/knowledge');
+            }}
+          >
+            더보기
+          </button>
         </div>
         <Carousel2 />
       </ChalyeSection>
@@ -382,155 +387,6 @@ const ChalyeSection = styled.section`
   }
 `;
 
-// const CardCarousel = () => {
-//   const [currentIndex, setCurrentIndex] = useState(0);
-//   const infoList = informationList;
-//   const [windowDimensions, setWindowDimensions] = useState(window.innerWidth);
-//   const [isDragging, setIsDragging] = useState(false);
-//   const [startPosition, setStartPosition] = useState(0);
-//   const [currentTranslate, setCurrentTranslate] = useState(0);
-//   const [prevTranslate, setPrevTranslate] = useState(0);
-//   const handleMouseDown = (e) => {
-//     setStartPosition(getPositionX(e));
-//     setIsDragging(true);
-//     requestAnimationFrame(animation);
-//   };
-
-//   const handleMouseMove = (e) => {
-//     if (isDragging) {
-//       const currentPosition = getPositionX(e);
-//       setCurrentTranslate(prevTranslate + currentPosition - startPosition);
-//     }
-//   };
-
-//   const handleMouseUp = () => {
-//     setIsDragging(false);
-//     setPrevTranslate(currentTranslate);
-
-//     const movedBy = currentTranslate - prevTranslate;
-
-//     if (movedBy < -100 && currentIndex < infoList.length - 1) {
-//       goToNextSlide();
-//     }
-
-//     if (movedBy > 100 && currentIndex > 0) {
-//       goToPrevSlide();
-//     }
-//   };
-//   useEffect(() => {
-//     function handleResize() {
-//       setWindowDimensions(window.innerWidth);
-//     }
-
-//     window.addEventListener('resize', handleResize);
-//     return () => window.removeEventListener('resize', handleResize);
-//   }, []);
-
-//   // 이미지가 드래그 중일떄 이미지를 움직이는 함수
-//   const animation = () => {
-//     setSliderPosition();
-//     if (isDragging) requestAnimationFrame(animation);
-//   };
-//   const setSliderPosition = () => {
-//     const imgContainer = document.querySelector('.img-container');
-//     imgContainer.style.transform = `translateX(${currentTranslate}px)`;
-//   };
-
-//   const getPositionX = (e) => {
-//     if (e.type.includes('mouse')) {
-//       // 마우스 이벤트
-//       return e.pageX;
-//     } else {
-//       // 터치 이벤트
-//       return e.touches[0].clientX;
-//     }
-//   };
-//   const goToNextSlide = () => {
-//     const increment = windowDimensions >= 768 ? 4 : 3;
-//     if (currentIndex + increment < infoList.length) {
-//       setCurrentIndex(currentIndex + increment);
-//     }
-//   };
-
-//   const goToPrevSlide = () => {
-//     const decrement = windowDimensions >= 768 ? 4 : 3;
-//     if (currentIndex - decrement >= 0) {
-//       setCurrentIndex(currentIndex - decrement);
-//     }
-//   };
-
-//   return (
-//     <CarouselContainerDiv>
-//       <div
-//         className="circle left"
-//         style={{ display: windowDimensions < 768 ? 'none' : 'block' }}
-//       >
-//         <img
-//           className="icon"
-//           onClick={goToPrevSlide}
-//           src="/assets/chevron-left.svg"
-//           alt="좌측 이동 화살표"
-//         />
-//       </div>
-
-//       {windowDimensions <= 768 ? (
-//         <div>
-//           <div
-//             className="img-container"
-//             onMouseDown={handleMouseDown}
-//             onMouseMove={handleMouseMove}
-//             onMouseUp={handleMouseUp}
-//             onMouseLeave={handleMouseUp}
-//           >
-//             {infoList
-//               .slice(currentIndex, currentIndex + (windowDimensions >= 768 ? 4 : 3))
-//               .map((info, index) => (
-//                 <CarouselItem key={info.id} windowDimensions={windowDimensions}>
-//                   <CarouselImg
-//                     index={index}
-//                     key={info.id}
-//                     src={info.url}
-//                     alt="캐러셀 이미지"
-//                     windowDimensions={windowDimensions}
-//                   />
-//                 </CarouselItem>
-//               ))}
-//           </div>
-//         </div>
-//       ) : (
-//         <>
-//           <div className="img-container">
-//             {infoList
-//               .slice(currentIndex, currentIndex + (windowDimensions >= 768 ? 4 : 3))
-//               .map((info, index) => (
-//                 <CarouselItem key={info.id} windowDimensions={windowDimensions}>
-//                   <CarouselImg
-//                     index={index}
-//                     key={info.id}
-//                     src={info.url}
-//                     alt="캐러셀 이미지"
-//                     windowDimensions={windowDimensions}
-//                   />
-//                 </CarouselItem>
-//               ))}
-//           </div>
-//         </>
-//       )}
-//       <div
-//         className="circle right"
-//         style={{ display: windowDimensions < 768 ? 'none' : 'block' }}
-//       >
-//         <img
-//           className="icon"
-//           onClick={goToNextSlide}
-//           src="/assets/chevron-right.svg"
-//           alt="우측 이동 화살표"
-//         />
-//       </div>
-//     </CarouselContainerDiv>
-//   );
-// };
-
 const Carousel2 = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
@@ -589,10 +445,7 @@ const Carousel2 = () => {
         onMouseUp={handleMouseUp}
         onMouseLeave={handleMouseUp}
       >
-        <div
-          className="circle left"
-          // style={{ display: windowDimensions < 768 ? 'none' : 'block' }}
-        >
+        <div className="circle left">
           <img
             className="icon"
             onClick={handlePrevClick}
@@ -607,10 +460,7 @@ const Carousel2 = () => {
           ></CarouselItem>
         ))}
 
-        <div
-          className="circle right"
-          // style={{ display: windowDimensions < 768 ? 'none' : 'block' }}
-        >
+        <div className="circle right">
           <img
             className="icon"
             onClick={handleNextClick}
@@ -633,7 +483,6 @@ const CarouselContainer = styled.div`
   scroll-snap-type: x mandatory;
   scroll-behavior: smooth;
   width: 100%;
-  box-shadow: 0 0 0 7px blue;
   height: 420px;
 
   @media (max-width: 768px) {
@@ -698,75 +547,3 @@ const CarouselItem = styled.div`
     text-align: center;
   }
 `;
-
-// const CarouselContainerDiv = styled.div`
-//   position: relative;
-//   width: 1300px;
-//   margin: 60px auto 0 auto;
-//   @media (max-width: 768px) {
-//     margin-top: 40px;
-//     width: 100%;
-//   }
-//   .img-container {
-//     position: relative;
-//     width: 100%;
-//     height: 500px; // 또는 적절한 고정 높이 설정
-//     overflow: hidden;
-//     border-radius: 20px;
-//     display: flex;
-//   }
-//   .circle {
-//     position: absolute;
-//     z-index: 1000;
-//     top: 50%;
-//     transform: translateY(-50%);
-//     cursor: pointer;
-//     width: 90px;
-//     height: 90px;
-//     border-radius: 50%;
-//     background-color: white;
-//     display: flex;
-//     align-items: center;
-//     justify-content: center;
-//     border: 3px solid #e9e9ec;
-//     box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
-//     .icon {
-//       max-width: 80px;
-//     }
-//   }
-//   .circle:hover {
-//     background-color: #f0f0f3;
-//   }
-//   .circle:active {
-//     background-color: white;
-//   }
-//   .circle.left {
-//     left: -45px;
-//   }
-//   .circle.right {
-//     right: -25px;
-//   }
-// `;
-
-// const CarouselItem = styled.div`
-//   position: relative;
-//   min-width: ${(props) =>
-//     props.windowDimensions >= 768 ? 'calc(25% - 15px)' : 'calc(33.33% - 20px)'};
-//   height: 500px;
-//   @media (max-width: 768px) {
-//     height: 300px;
-//   }
-//   margin-right: 90px;
-//   transition: transform 0.5s ease-out;
-//   &:last-child {
-//     margin-right: 0;
-//   }
-// `;
-
-// const CarouselImg = styled.img`
-//   position: absolute;
-//   transform: ${(props) =>
-//     `translateX(-${props.index * (props.windowDimensions >= 768 ? 25 : 33.33)}%)`};
-//   transition: transform ease-out 0.5s;
-//   border-radius: 20px;
-// `;

@@ -17,7 +17,7 @@ const BlessingQnaResult = () => {
     나이: false,
   });
 
-  // // 채팅 답변 받는 함수
+  // 채팅 답변 받는 함수
   // const fetchServerResponse = async () => {
   //   postBlessingMent((res)=>{
   //   })
@@ -76,7 +76,6 @@ const BlessingQnaResult = () => {
 
   // 카카오톡 공유하기
   const handleKakaoClick = () => {
-    // 카카오톡 공유하기
     window.Kakao.init('ab36dcefbb0413d6fa467641c2864216');
     window.Kakao.Link.sendDefault({
       objectType: 'text',
@@ -156,7 +155,6 @@ const BlessingQnaResult = () => {
                 덕담 공유하기
               </ShareBtn>
             )}
-            {/* //! 카카오톡 공유하기 기능, 클립보드 복사 기능 */}
             {showShareOptions && (
               <>
                 <ShareOptions>
@@ -239,19 +237,18 @@ const FoldableArea = styled.div`
   position: relative;
   overflow: hidden;
   transition: height 0.5s ease-in-out;
-  height: ${(props) => (props.isFolded ? '50px' : '500px')};
+  height: ${(props) => (props.isFolded ? '50px' : '450px')};
   background: #fef0ea;
   text-align: center;
   p {
     color: #979393;
-    font-size: 22px;
+    font-size: 18px;
     line-height: 25px;
-    margin-bottom: 20px;
   }
   .toneGroups {
     display: flex;
     gap: 25px;
-    margin-bottom: 15px;
+    margin: 10px 0;
     justify-content: center;
   }
 
@@ -261,9 +258,9 @@ const FoldableArea = styled.div`
       background-color: var(--main-color);
       color: white;
       padding: 5px 10px;
-      font-size: 24px;
+      font-size: 20px;
       border-radius: 10px;
-      margin: 0 auto 30px auto;
+      margin: 0 auto 10px auto;
     }
     .shareTxt {
       color: black;
@@ -304,17 +301,17 @@ const EmphasizeBtn = styled.button`
   background-color: ${(props) => (props.isActive ? 'var(--main-color)' : '#b5b5b5')};
   color: white;
   padding: 5px 10px;
-  font-size: 24px;
+  font-size: 20px;
   border-radius: 10px;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 `;
 const ShareBtn = styled.button`
   background-color: ${(props) => (props.isActive ? 'var(--main-color)' : '#b5b5b5')};
   color: white;
   padding: 5px 10px;
-  font-size: 28px;
+  font-size: 22px;
   border-radius: 10px;
-  margin-bottom: 15px;
+  margin-bottom: 10px;
 `;
 const ShareOptions = styled.div`
   display: flex;
@@ -325,10 +322,9 @@ const ShareOptions = styled.div`
     gap: 20px;
   }
   img {
-    width: 60px;
-    height: 60px;
-    object-fit: cover;
-    margin-bottom: 15px;
+    width: 40px;
+    height: 40px;
+    margin-bottom: 10px;
     cursor: pointer;
   }
   p {
@@ -342,10 +338,10 @@ const ShareOptions = styled.div`
 const BackBtn = styled.button`
   background-color: var(--main-color);
   color: white;
-  padding: 5px 10px;
-  font-size: 24px;
+  padding: 3px 10px;
+  font-size: 20px;
   border-radius: 10px;
-  margin-bottom: 15px;
+  margin-bottom: 10px;
 `;
 
 const ToastMessage = styled.div`
