@@ -116,19 +116,22 @@ export default Main;
 
 const MainWrapper = styled.main`
   display: flex;
-  justify-content: center;
+  width: 1300px;
   flex-direction: column;
-  font-size: 24px;
+  justify-content: center;
   align-items: center;
+  font-size: 24px;
   @media (max-width: 396px) {
     font-size: 16px;
+    width: 100%;
   }
   .logoNTxt {
-    margin: 0 auto;
-    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     img:first-of-type {
       width: 450px;
-      margin-left: 120px;
       display: block;
       @media (max-width: 396px) {
         width: 250px;
@@ -137,6 +140,7 @@ const MainWrapper = styled.main`
     }
     img:last-of-type {
       width: 300px;
+      display: block;
       @media (max-width: 396px) {
         width: 250px;
       }

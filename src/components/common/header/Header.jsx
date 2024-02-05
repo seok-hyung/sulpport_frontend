@@ -57,12 +57,12 @@ const HeaderWrapper = styled.header`
     margin-bottom: 20px;
     @media (max-width: 396px) {
       width: 100%;
-      padding: 0 30px;
+      padding: 10px 20px;
     }
     img {
       width: 50px;
       @media (max-width: 396px) {
-        width: 40px;
+        width: 30px;
       }
     }
   }
@@ -117,12 +117,13 @@ const SearchInputSlideIn = styled.input`
   background-color: #f2f2f2;
   animation: ${slideIn} 0.5s forwards ease-out;
   font-size: 24px;
-  @media (max-width: 396px) {
-    font-size: 16px;
-  }
   &:focus {
     background-color: #ffffff;
     border: 1px solid var(--main-color);
+  }
+  @media (max-width: 396px) {
+    font-size: 14px;
+    padding: 15px 20px;
   }
 `;
 
