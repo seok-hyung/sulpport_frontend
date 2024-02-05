@@ -1,116 +1,67 @@
 import React, { useRef, useState } from 'react';
-import { useEffect } from 'react';
 import { carouselList } from './CarouselList';
 import styled from 'styled-components';
 
 const Carousel = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const items = carouselList;
-  const [touchStart, setTouchStart] = useState(0);
-  const [touchEnd, setTouchEnd] = useState(0);
-  const [mouseDown, setMouseDown] = useState(false);
-  const [startX, setStartX] = useState(0);
-  const [scrollLeft, setScrollLeft] = useState(0);
-  const carouselRef = useRef(null); // 추가된 부분
-  const [carouselWidth, setCarouselWidth] = useState(1100);
-  useEffect(() => {
-    setCarouselWidth(carouselRef.current.offsetWidth); // 추가된 부분
-  }, []); // 추가된 부분
+  const [isDragging, setIsDragging] = useState(false);
+  const [startDrag, setStartDrag] = useState(0);
+  const [scrollStart, setScrollStart] = useState(0);
+  const itemLists = carouselList;
+  const carouselRef = useRef();
 
-  const handleTouchStart = (e) => {
-    setTouchStart(e.targetTouches[0].clientX);
-  };
-
-  const handleTouchEnd = (e) => {
-    setTouchEnd(e.changedTouches[0].clientX);
+  const handleScroll = (event) => {
+    const index = Math.round(event.target.scrollLeft / event.target.scrollWidth);
+    setCurrentIndex(index);
   };
 
   const handleMouseDown = (e) => {
-    setMouseDown(true);
-    setStartX(e.pageX - e.currentTarget.offsetLeft);
-    setScrollLeft(e.currentTarget.scrollLeft);
-  };
-
-  const handleMouseLeave = () => {
-    setMouseDown(false);
+    setIsDragging(true);
+    setStartDrag(e.clientX);
+    setScrollStart(carouselRef.current.scrollLeft);
   };
 
   const handleMouseMove = (e) => {
-    if (!mouseDown) return;
+    if (!isDragging) return;
     e.preventDefault();
-    const x = e.pageX - e.currentTarget.offsetLeft;
-    const walk = (x - startX) * (carouselWidth / window.innerWidth);
-    e.currentTarget.scrollLeft = scrollLeft - walk;
+    const scrollLeft = scrollStart - (e.clientX - startDrag);
+    carouselRef.current.scrollLeft = scrollLeft;
   };
 
-  const moveSlide = (direction, walk) => {
-    if (direction === 'prev') {
-      const prevIndex =
-        currentIndex - Math.ceil(walk / carouselWidth) < 0
-          ? items.length - 1
-          : currentIndex - Math.ceil(walk / carouselWidth);
-      setCurrentIndex(prevIndex);
-    } else if (direction === 'next') {
-      const nextIndex = (currentIndex + Math.ceil(walk / carouselWidth)) % items.length;
-      setCurrentIndex(nextIndex);
-    }
-  };
-
-  const handleMouseUp = (e) => {
-    setMouseDown(false);
-    const x = e.pageX - e.currentTarget.offsetLeft;
-    const walk = (x - startX) * (carouselWidth / window.innerWidth);
-
-    if (Math.abs(walk) >= 200) {
-      if (walk > 0) {
-        moveSlide('prev', walk);
-      } else {
-        moveSlide('next', walk);
-      }
-    }
+  const handleMouseUp = () => {
+    setIsDragging(false);
   };
 
   return (
-    <>
-      <CarouselSection>
-        <div
-          className="img-container"
-          onMouseDown={handleMouseDown}
-          onMouseLeave={handleMouseLeave}
-          onMouseUp={handleMouseUp}
-          onMouseMove={handleMouseMove}
-          onTouchStart={handleTouchStart}
-          onTouchEnd={handleTouchEnd}
-          ref={carouselRef} // 추가된 부분
-        >
-          {items.map((item, index) => (
-            <CarouselContent
-              key={item.id}
-              url={item.url}
-              index={index}
-              currentIndex={currentIndex}
-            >
-              <h2>{item.tags}</h2>
-              <p>{item.txt}</p>
-            </CarouselContent>
-          ))}
-        </div>
-        <ButtonWrapper>
-          {items.map((_, index) => (
-            <Button
-              key={index}
-              onClick={() => setCurrentIndex(index)}
-              active={index === currentIndex}
-            />
-          ))}
-        </ButtonWrapper>
-      </CarouselSection>
-    </>
+    <CarouselContainer
+      ref={carouselRef}
+      onScroll={handleScroll}
+      onMouseDown={handleMouseDown}
+      onMouseMove={handleMouseMove}
+      onMouseUp={handleMouseUp}
+      onMouseLeave={handleMouseUp}
+    >
+      {itemLists.map((item) => (
+        <CarouselItem key={item.id} style={{ backgroundImage: `url(${item.url})` }}>
+          <dic className="txtDiv">
+            <small>{item.tags}</small>
+            <p>{item.txt}</p>
+          </dic>
+        </CarouselItem>
+      ))}
+      <ButtonWrapper>
+        {itemLists.map((_, index) => (
+          <Button
+            key={index}
+            onClick={() => setCurrentIndex(index)}
+            active={index === currentIndex}
+          />
+        ))}
+      </ButtonWrapper>
+    </CarouselContainer>
   );
 };
-
 export default Carousel;
-
 const CarouselSection = styled.section`
   width: 1100px;
   border-radius: 20px;
@@ -121,14 +72,22 @@ const CarouselSection = styled.section`
   @media (max-width: 768px) {
     width: 680px;
   }
-  .img-container {
+  /* .img-container {
     position: relative;
     width: 100%;
     display: flex;
     overflow: hidden;
     border-radius: 10px;
     cursor: pointer;
-  }
+  } */
+`;
+
+const CarouselImage = styled.img`
+  flex: 0 0 100%;
+  width: 100%;
+  height: 100%;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
 `;
 const CarouselContent = styled.div`
   width: 100%;
@@ -178,4 +137,48 @@ const Button = styled.button`
     scale:1.3;
     background-color: var(--main-color);
   `}
+`;
+
+const CarouselContainer = styled.div`
+  display: flex;
+  overflow: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  width: 1100px;
+  position: relative;
+  /* 스크롤 바를 숨김 */
+  ::-webkit-scrollbar {
+    display: none;
+  }
+`;
+
+const CarouselItem = styled.div`
+  flex: 0 0 100%;
+  height: 400px;
+  border-radius: 10px;
+  cursor: grab;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  .txtDiv {
+    position: absolute;
+    top: 30px;
+    left: 20px;
+    small {
+      display: block;
+      font-size: 30px;
+      color: white;
+      margin-bottom: 30px;
+    }
+    p {
+      font-size: 44px;
+      color: white;
+      font-weight: 900;
+    }
+  }
 `;

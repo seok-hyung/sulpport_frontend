@@ -48,7 +48,10 @@ const GlobalStyled = createGlobalStyle`
   body{
     font-family: 'SUITE-Regular';
     font-weight: 400;
-    /* overflow-y: hidden; */
+    /* 스크롤 바를 숨김 */
+  ::-webkit-scrollbar {
+    display: none;
+  }
     
   }
 
