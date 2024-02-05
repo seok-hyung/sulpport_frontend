@@ -49,18 +49,21 @@ export default Header;
 
 const HeaderWrapper = styled.header`
   .headerUl {
-    width: 1100px;
+    width: 1300px;
     margin: 40px auto 0 auto;
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 20px;
-    img {
-      width: 50px;
-    }
-    @media (max-width: 768px) {
+    @media (max-width: 396px) {
       width: 100%;
       padding: 0 30px;
+    }
+    img {
+      width: 50px;
+      @media (max-width: 396px) {
+        width: 40px;
+      }
     }
   }
 `;
@@ -96,7 +99,7 @@ const SearchWrapper = styled.div`
     margin-right: 40px;
     z-index: 10;
   }
-  @media (max-width: 768px) {
+  @media (max-width: 396px) {
     img {
       margin-right: 10px;
     }
@@ -114,7 +117,7 @@ const SearchInputSlideIn = styled.input`
   background-color: #f2f2f2;
   animation: ${slideIn} 0.5s forwards ease-out;
   font-size: 24px;
-  @media (max-width: 768px) {
+  @media (max-width: 396px) {
     font-size: 16px;
   }
   &:focus {

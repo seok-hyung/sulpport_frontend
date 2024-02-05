@@ -62,62 +62,81 @@ const Carousel = () => {
   );
 };
 export default Carousel;
-const CarouselSection = styled.section`
-  width: 1100px;
-  border-radius: 20px;
-  position: relative;
+const CarouselContainer = styled.div`
   display: flex;
-  height: 300px;
+  overflow: auto;
   margin: 0 auto;
-  @media (max-width: 768px) {
-    width: 680px;
-  }
-  /* .img-container {
-    position: relative;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  width: 1300px;
+  border-radius: 10px;
+  position: relative;
+  @media (max-width: 396px) {
     width: 100%;
-    display: flex;
-    overflow: hidden;
-    border-radius: 10px;
-    cursor: pointer;
-  } */
+    height: 200px;
+  }
+  /* 스크롤 바를 숨김 */
+  ::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
-const CarouselImage = styled.img`
+const CarouselItem = styled.div`
   flex: 0 0 100%;
-  width: 100%;
-  height: 100%;
+  height: 400px;
+  cursor: grab;
   scroll-snap-align: start;
   scroll-snap-stop: always;
-`;
-const CarouselContent = styled.div`
-  width: 100%;
-  height: 300px;
-  position: absolute;
-  border-radius: 20px;
-  background-image: url(${(props) => props.url});
-  background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
-  padding: 40px;
-  box-sizing: border-box;
-  transition: transform ease-out 0.5s;
-  transform: ${(props) => `translateX(${(props.index - props.currentIndex) * 100}%)`};
-  h2 {
-    font-size: 30px;
-    margin-bottom: 20px;
-    color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  border-radius: 10px;
+  @media (max-width: 396px) {
+    height: 200px;
   }
-  p {
-    font-size: 44px;
-    color: white;
-    font-weight: 900;
+
+  .txtDiv {
+    position: absolute;
+    top: 50px;
+    left: 40px;
+    @media (max-width: 396px) {
+      top: 30px;
+      left: 25px;
+    }
+    small {
+      display: block;
+      font-size: 34px;
+      color: white;
+      margin-bottom: 30px;
+      @media (max-width: 396px) {
+        font-size: 18px;
+        font-weight: 900;
+        margin-bottom: 14px;
+      }
+    }
+    p {
+      font-size: 50px;
+      color: white;
+      font-weight: 900;
+      @media (max-width: 396px) {
+        font-size: 28px;
+      }
+    }
   }
 `;
+
 const ButtonWrapper = styled.div`
   position: absolute;
   display: flex;
   left: 60px;
   bottom: 35px;
+  @media (max-width: 396px) {
+    left: 30px;
+    bottom: 18px;
+  }
 `;
 
 const Button = styled.button`
@@ -137,48 +156,8 @@ const Button = styled.button`
     scale:1.3;
     background-color: var(--main-color);
   `}
-`;
-
-const CarouselContainer = styled.div`
-  display: flex;
-  overflow: auto;
-  scroll-snap-type: x mandatory;
-  scroll-behavior: smooth;
-  width: 1100px;
-  position: relative;
-  /* 스크롤 바를 숨김 */
-  ::-webkit-scrollbar {
-    display: none;
-  }
-`;
-
-const CarouselItem = styled.div`
-  flex: 0 0 100%;
-  height: 400px;
-  border-radius: 10px;
-  cursor: grab;
-  scroll-snap-align: start;
-  scroll-snap-stop: always;
-  background-size: cover;
-  background-position: center;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  .txtDiv {
-    position: absolute;
-    top: 30px;
-    left: 20px;
-    small {
-      display: block;
-      font-size: 30px;
-      color: white;
-      margin-bottom: 30px;
-    }
-    p {
-      font-size: 44px;
-      color: white;
-      font-weight: 900;
-    }
+  @media (max-width: 396px) {
+    width: 10px;
+    height: 10px;
   }
 `;
