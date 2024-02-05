@@ -19,6 +19,8 @@ const Main = () => {
         <img src="/assets/main-logo.svg" alt="메인 로고" />
         <img src="/assets/main-txt.svg" alt="메인 텍스트" />
       </section>
+      <div className="w"></div>
+      <div className="w2"></div>
       <IntroduceSection>
         <ul className="menusUl">
           <li
@@ -115,12 +117,23 @@ const Main = () => {
 export default Main;
 
 const MainWrapper = styled.main`
-  display: flex;
   width: 1300px;
+  margin: 0 auto;
+  display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   font-size: 24px;
+  .w {
+    width: 440px;
+    height: 20px;
+    box-shadow: inset 0 0 0 3px blue;
+  }
+  .w2 {
+    box-shadow: inset 0 0 0 3px red;
+    width: 396px;
+    height: 20px;
+  }
   @media (max-width: 396px) {
     font-size: 16px;
     width: 100%;
