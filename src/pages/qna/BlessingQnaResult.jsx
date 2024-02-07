@@ -74,17 +74,36 @@ const BlessingQnaResult = () => {
     setChat(initialChat);
   }, []);
 
+  // init 체크
+  useEffect(() => {
+    const script = document.createElement('script');
+    script.src = '//developers.kakao.com/sdk/js/kakao.min.js';
+    script.onload = () => {
+      window.Kakao.init('ab36dcefbb0413d6fa467641c2864216'); // 발급받은 앱 키
+    };
+    document.body.appendChild(script);
+  }, []);
+
   // 카카오톡 공유하기
   const handleKakaoClick = () => {
-    window.Kakao.init('ab36dcefbb0413d6fa467641c2864216');
-    window.Kakao.Link.sendDefault({
-      objectType: 'text',
-      text: selectedMessage,
-      link: {
-        mobileWebUrl: 'https://developers.kakao.com',
-        webUrl: 'https://developers.kakao.com',
-      },
-    });
+    if (selectedMessage) {
+      window.Kakao.Link.sendScrap({
+        requestIrl: ``,
+        templateId: 104152,
+        templateArgs: {
+          DESC: selectedMessage,
+        },
+      });
+    }
+    // window.Kakao.init('ab36dcefbb0413d6fa467641c2864216');
+    // window.Kakao.Link.sendDefault({
+    //   objectType: 'text',
+    //   text: selectedMessage,
+    //   link: {
+    //     mobileWebUrl: 'https://developers.kakao.com',
+    //     webUrl: 'https://developers.kakao.com',
+    //   },
+    // });
   };
 
   // 클립보드에 복사
@@ -92,7 +111,7 @@ const BlessingQnaResult = () => {
   const handleCopyClick = () => {
     navigator.clipboard.writeText(selectedMessage.text);
     setToastVisible(true);
-    setTimeout(() => setToastVisible(false), 3000); // 3초 후 메시지 숨김
+    setTimeout(() => setToastVisible(false), 3000);
   };
   return (
     <Wrapper>
