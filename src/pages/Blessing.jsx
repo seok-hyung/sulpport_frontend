@@ -35,16 +35,14 @@ const Blessing = () => {
           맞춤형 덕담 찾아보기!
         </button>
       </main>
-      <div>
-        <div className="imgs">
-          <div>
-            <img src="/assets/time-icon.svg" alt="시계 이미지" />
-            <p>약 1분 소요</p>
-          </div>
-          <div>
-            <img src="/assets/pencil-icon.svg" alt="연필 이미지" />
-            <p>무제한 생성</p>
-          </div>
+      <div className="imgs">
+        <div>
+          <img src="/assets/time-icon.svg" alt="시계 이미지" />
+          <p>약 1분 소요</p>
+        </div>
+        <div>
+          <img src="/assets/pencil-icon.svg" alt="연필 이미지" />
+          <p>무제한 생성</p>
         </div>
       </div>
     </BlessingWrapper>
@@ -55,6 +53,11 @@ export default Blessing;
 
 const BlessingWrapper = styled.div`
   margin: 0 auto;
+  width: 100vw;
+  max-width: 1300px;
+  @media (max-width: 430px) {
+    width: 100%;
+  }
   .topImg {
     display: flex;
     flex-direction: column;
@@ -63,34 +66,63 @@ const BlessingWrapper = styled.div`
     border-bottom-left-radius: 30px;
     border-bottom-right-radius: 30px;
     img:first-of-type {
-      width: 200px;
+      width: 300px;
+      @media (max-width: 430px) {
+        width: 160px;
+      }
     }
     img:last-of-type {
       width: 400px;
-      padding: 30px 0;
+      margin: 40px auto;
+      @media (max-width: 430px) {
+        width: 250px;
+        margin: 20px auto;
+      }
     }
   }
   main {
+    width: 100vw;
+    max-width: 1300px;
+
     .buttons {
       display: flex;
       justify-content: center;
       gap: 70px;
       margin-top: 60px;
+      @media (max-width: 430px) {
+        gap: 10px;
+        margin-top: 20px;
+      }
       button {
         border-radius: 15px;
         background-color: #eaeaea;
         padding: 10px 60px;
         display: flex;
         font-size: 24px;
+
+        @media (max-width: 430px) {
+          font-size: 16px;
+          padding: 5px 20px;
+        }
       }
     }
     .txtDiv {
       text-align: center;
       margin: 70px auto;
+
+      @media (max-width: 430px) {
+        width: 100%;
+        margin: 20px auto;
+      }
       p {
         font-size: 36px;
         margin-bottom: 20px;
         line-height: 50px;
+        @media (max-width: 430px) {
+          font-size: 20px;
+          margin-bottom: 10px;
+          line-height: 30px;
+        }
       }
       strong {
         font-weight: 700;
@@ -107,7 +139,12 @@ const BlessingWrapper = styled.div`
       display: block;
       padding: 10px 40px;
       border-radius: 10px;
-      margin: 120px auto 60px auto;
+      margin: 100px auto 60px auto;
+      @media (max-width: 430px) {
+        font-size: 20px;
+        margin: 30px auto 20px auto;
+        padding: 5px 20px;
+      }
     }
   }
   .imgs {
@@ -116,17 +153,25 @@ const BlessingWrapper = styled.div`
     align-items: center;
     gap: 50px;
     margin-bottom: 100px;
+    width: 100vw;
+    max-width: 1300px;
     div {
-      width: 50px;
+      width: 3.125rem;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       text-align: center;
+      @media (max-width: 430px) {
+        width: 3rem;
+      }
     }
     img {
       width: 60px;
       margin-bottom: 10px;
+      @media (max-width: 430px) {
+        width: 100%;
+      }
     }
   }
 `;

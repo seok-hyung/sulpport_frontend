@@ -115,7 +115,6 @@ const Main = () => {
 export default Main;
 
 const MainWrapper = styled.main`
-  overflow-x: hidden;
   width: 100vw;
   max-width: 1300px;
   margin: 0 auto;

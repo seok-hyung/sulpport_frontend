@@ -95,15 +95,6 @@ const BlessingQnaResult = () => {
         },
       });
     }
-    // window.Kakao.init('ab36dcefbb0413d6fa467641c2864216');
-    // window.Kakao.Link.sendDefault({
-    //   objectType: 'text',
-    //   text: selectedMessage,
-    //   link: {
-    //     mobileWebUrl: 'https://developers.kakao.com',
-    //     webUrl: 'https://developers.kakao.com',
-    //   },
-    // });
   };
 
   // 클립보드에 복사
@@ -209,32 +200,45 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   height: 100vh;
+  width: 100%;
   header {
     background-color: #fcfafa;
     width: 100%;
     img {
-      width: 450px;
+      width: 40.625rem;
       display: block;
       padding: 50px 0;
       margin: 0 auto;
+      @media (max-width: 430px) {
+        width: 18rem;
+        padding: 20px 10px;
+      }
     }
   }
 `;
 
 const ChatBox = styled.div`
   width: 100%;
-  height: 600px;
+  max-width: 1300px;
+  height: 37.5rem;
   padding: 50px 40px;
   flex-grow: 1;
   transition: all 0.5s ease-in-out;
   overflow-y: auto;
+  @media (max-width: 430px) {
+    height: 25rem;
+  }
   .chat-message {
     padding: 10px;
     margin-bottom: 10px;
     border-radius: 5px;
+    @media (max-width: 430px) {
+      padding: 0px;
+      margin-bottom: 5px;
+    }
   }
   .server-message {
-    width: 520px;
+    width: 36rem;
     background-color: #f2f2f2;
     color: black;
     margin-right: auto;
@@ -244,6 +248,12 @@ const ChatBox = styled.div`
     padding: 30px 40px;
     font-size: 26px;
     line-height: 30px;
+    @media (max-width: 430px) {
+      width: 18rem;
+      font-size: 14px;
+      line-height: 20px;
+      padding: 15px 20px;
+    }
   }
   .user-message {
     background-color: var(--main-color);
@@ -256,19 +266,30 @@ const FoldableArea = styled.div`
   position: relative;
   overflow: hidden;
   transition: height 0.5s ease-in-out;
-  height: ${(props) => (props.isFolded ? '50px' : '450px')};
+  height: ${(props) => (props.isFolded ? '50px' : '400px')};
   background: #fef0ea;
   text-align: center;
+  overflow-y: hidden;
+  width: 100%;
+
   p {
     color: #979393;
     font-size: 18px;
     line-height: 25px;
+    @media (max-width: 430px) {
+      font-size: 12px;
+      line-height: 16px;
+    }
   }
   .toneGroups {
     display: flex;
-    gap: 25px;
-    margin: 10px 0;
     justify-content: center;
+    gap: 25px;
+    margin: 10px auto;
+    @media (max-width: 430px) {
+      gap: 10px;
+      margin: 10px auto;
+    }
   }
 
   .btnGroups {
@@ -280,6 +301,9 @@ const FoldableArea = styled.div`
       font-size: 20px;
       border-radius: 10px;
       margin: 0 auto 10px auto;
+      @media (max-width: 430px) {
+        font-size: 14px;
+      }
     }
     .shareTxt {
       color: black;
@@ -315,6 +339,9 @@ const ToneButton = styled.button`
   padding: 3px 20px;
   border-radius: 15px;
   font-size: 20px;
+  @media (max-width: 430px) {
+    font-size: 14px;
+  }
 `;
 const EmphasizeBtn = styled.button`
   background-color: ${(props) => (props.isActive ? 'var(--main-color)' : '#b5b5b5')};
@@ -323,6 +350,9 @@ const EmphasizeBtn = styled.button`
   font-size: 20px;
   border-radius: 10px;
   margin-bottom: 10px;
+  @media (max-width: 430px) {
+    font-size: 14px;
+  }
 `;
 const ShareBtn = styled.button`
   background-color: ${(props) => (props.isActive ? 'var(--main-color)' : '#b5b5b5')};
@@ -331,6 +361,9 @@ const ShareBtn = styled.button`
   font-size: 22px;
   border-radius: 10px;
   margin-bottom: 10px;
+  @media (max-width: 430px) {
+    font-size: 16px;
+  }
 `;
 const ShareOptions = styled.div`
   display: flex;
@@ -357,10 +390,14 @@ const ShareOptions = styled.div`
 const BackBtn = styled.button`
   background-color: var(--main-color);
   color: white;
-  padding: 3px 10px;
+  padding: 5px 10px;
   font-size: 20px;
   border-radius: 10px;
   margin-bottom: 10px;
+  margin-top: 10px;
+  @media (max-width: 430px) {
+    font-size: 14px;
+  }
 `;
 
 const ToastMessage = styled.div`
@@ -372,4 +409,8 @@ const ToastMessage = styled.div`
   color: #fff;
   padding: 10px 30px;
   border-radius: 5px;
+  @media (max-width: 430px) {
+    top: 110px;
+    padding: 10px 20px;
+  }
 `;

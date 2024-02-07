@@ -38,18 +38,29 @@ const NavBtns = ({
 export default NavBtns;
 
 const ButtonContainer = styled.div`
-  width: 700px;
-  margin: 80px auto;
+  max-width: 40rem;
+  margin: 80px auto 0 auto;
   display: flex;
   justify-content: ${(props) => (props.question === 1 ? 'flex-end' : 'space-between')};
+  @media (max-width: 430px) {
+    width: 100%;
+    max-width: 20rem;
+    margin: 20px auto 0 auto;
+  }
   button {
     display: flex;
     align-items: center;
     gap: 20px;
+    @media (max-width: 430px) {
+      gap: 5px;
+    }
     p {
       font-size: 32px;
       color: #000000;
       font-weight: bolder;
+      @media (max-width: 430px) {
+        font-size: 18px;
+      }
     }
     .nextTxt {
       color: ${(props) => (props.disabled ? '#000000' : `${props.color}`)};
@@ -57,6 +68,9 @@ const ButtonContainer = styled.div`
 
     img {
       width: 60px;
+      @media (max-width: 430px) {
+        width: 30px;
+      }
     }
   }
   .previousBtn {

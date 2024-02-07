@@ -76,8 +76,7 @@ const BlessingQna = () => {
     setQ5Value(e.target.value);
   };
   //q7
-  // ! 추가 작업 필요
-  // 5개 질문지 답 정보들을 모아서 서버에 요청보내며, 결과페이지로 이동하는 함수
+
   const [formData, setFormData] = useState({
     name: name,
     tone: selectedOptions,
@@ -174,7 +173,6 @@ const BlessingQna = () => {
             previousQuestion={previousQuestion}
             nextQuestion={nextQuestion}
             isNextDisabled={selectedOptions.length < 1}
-            question={question}
             color={'var(--main-color)'}
           />
         </>
@@ -208,7 +206,6 @@ const BlessingQna = () => {
             previousQuestion={previousQuestion}
             nextQuestion={nextQuestion}
             isNextDisabled={!q3SelectedOption && !q3InputValue}
-            question={question}
             color={'var(--main-color)'}
           />
         </>
@@ -245,7 +242,6 @@ const BlessingQna = () => {
             previousQuestion={previousQuestion}
             nextQuestion={nextQuestion}
             isNextDisabled={!q4SelectedOption && !q4InputValue}
-            question={question}
             color={'var(--main-color)'}
           />
         </>
@@ -289,7 +285,6 @@ const BlessingQna = () => {
             previousQuestion={previousQuestion}
             nextQuestion={nextQuestion}
             isNextDisabled={!q5Value}
-            question={question}
             nextButtonClassName="nextButton"
             nextButtonText="제출하기"
             nextButtonIcon="/assets/arrow-right-white-icon.svg"
@@ -330,7 +325,6 @@ const BlessingQna = () => {
 export default BlessingQna;
 
 const LoadingComponent = ({
-  setQuestion,
   q4SelectedOption,
   q4InputValue,
   q5Value,
@@ -343,74 +337,104 @@ const LoadingComponent = ({
     <div className="q6LoadingDiv">
       <img src="/assets/loading-card-orange.svg" alt="Loading" />
       <div className="txtDiv">
-        <strong>{q4SelectedOption || q4InputValue}</strong>(인)하는{' '}
-        <strong>
-          {q5Value === 0 || q5Value === '0'
-            ? '10대 미만'
-            : q5Value === '70'
-            ? '70대 이상'
-            : `${q5Value}대`}
-        </strong>{' '}
-        <strong>
-          <strong>{q3SelectedOption || q3InputValue}</strong> &quot;{name}&quot;
-        </strong>
-        님에게
-        <br /> 보내고 싶은 <strong>{selectedOptions.join(', ')}</strong> 덕담
+        <p>
+          <strong>{q4SelectedOption || q4InputValue}</strong>(인)하는{' '}
+          <strong>
+            {q5Value === 0 || q5Value === '0'
+              ? '10대 미만'
+              : q5Value === '70'
+              ? '70대 이상'
+              : `${q5Value}대`}
+          </strong>{' '}
+          <strong>
+            <strong>{q3SelectedOption || q3InputValue}</strong> &quot;{name}&quot;
+          </strong>
+          님에게
+          <br /> 보내고 싶은 <strong>{selectedOptions.join(', ')}</strong> 덕담
+        </p>
         <p>덕담을 만드는 중...</p>
       </div>
     </div>
   );
 };
 const ProgressBar = styled.div`
-  width: 100%;
+  width: 100vw;
   background-color: #f2f2f2;
   display: flex;
   align-items: center;
   border-radius: 10px;
   height: 25px;
-  margin: 40px 0;
+  margin: 40px auto;
+  @media (max-width: 430px) {
+    margin: 10px auto 15px auto;
+    height: 15px;
+  }
   .progress {
     width: ${(props) => props.progress}%;
-    height: 20px;
+    height: 25px;
     background-color: #fc764a;
+    @media (max-width: 430px) {
+      height: 15px;
+    }
   }
 `;
 const QnaWrapper = styled.div`
+  margin: 0 auto;
   strong {
     color: var(--main-color);
     font-size: 38px;
     font-weight: 900;
+    @media (max-width: 430px) {
+      font-size: 18px;
+    }
   }
   header {
     background-color: #fcfafa;
     width: 100%;
     img {
-      width: 650px;
+      width: 40.625rem;
       display: block;
       padding: 50px 0;
       margin: 0 auto;
+      @media (max-width: 430px) {
+        width: 18rem;
+        padding: 20px 10px;
+      }
     }
   }
 
   .qDiv {
-    width: 800px;
+    max-width: 40rem;
+    height: 50rem;
     margin: 0 auto;
     background-color: #fae9e4;
     text-align: center;
     padding: 100px 50px 150px 50px;
     border-radius: 20px;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    @media (max-width: 430px) {
+      width: 20rem;
+      height: 29.0625rem;
+      padding: 40px 10px;
+    }
     p {
       font-size: 38px;
       font-weight: 900;
-      margin-bottom: 70px;
+      margin-bottom: 100px;
+      @media (max-width: 430px) {
+        font-size: 16px;
+        margin-bottom: 20px;
+      }
     }
     input {
       padding: 20px 60px;
       border-radius: 20px;
       border: none;
       outline: none;
-      margin-top: 30px;
       color: white;
       text-align: center;
       font-size: 24px;
@@ -418,14 +442,29 @@ const QnaWrapper = styled.div`
         color: white;
         font-size: 24px;
         text-align: center;
+        @media (max-width: 430px) {
+          font-size: 16px;
+        }
+      }
+      @media (max-width: 430px) {
+        padding: 10px 20px;
+        font-size: 16px;
+        margin-top: 10px;
+      }
+    }
+    small {
+      font-size: 30px;
+      color: #bdbdbd;
+      display: block;
+      margin-bottom: 60px;
+      @media (max-width: 430px) {
+        font-size: 14px;
+        margin-bottom: 20px;
       }
     }
   }
   .q1Div {
     .q1Contents {
-      p {
-        margin-bottom: 70px;
-      }
       input {
         background-color: white;
         color: black;
@@ -442,18 +481,19 @@ const QnaWrapper = styled.div`
         text-underline-position: under;
         font-size: 28px;
         cursor: pointer;
+        @media (max-width: 430px) {
+          margin-top: 20px;
+          font-size: 16px;
+        }
       }
     }
   }
   .q2Div {
     p {
       margin-bottom: 30px;
-    }
-    small {
-      font-size: 30px;
-      color: #bdbdbd;
-      display: block;
-      margin-bottom: 60px;
+      @media (max-width: 430px) {
+        margin-bottom: 10px;
+      }
     }
   }
   .q3Div {
@@ -467,29 +507,36 @@ const QnaWrapper = styled.div`
     }
     img {
       width: 40px;
+      @media (max-width: 430px) {
+        width: 20px;
+      }
     }
   }
   .q5Div {
     p {
-      font-size: 36px;
-      span {
-        text-decoration: underline;
-        text-decoration-thickness: 3px;
-      }
-
-      strong:last-of-type {
-        text-decoration: underline;
+      margin-bottom: 30px;
+      @media (max-width: 430px) {
+        margin-bottom: 10px;
+        margin-top: -60px;
       }
     }
-    small {
-      font-size: 24px;
-      color: #bdbdbd;
-      display: block;
-      margin-bottom: 200px;
+    span {
+      text-decoration: underline;
+      text-decoration-thickness: 3px;
+    }
+
+    strong:last-of-type {
+      text-decoration: underline;
     }
     .range-labels {
       display: flex;
       justify-content: space-between;
+    }
+    small {
+      margin-bottom: 100px;
+      @media (max-width: 430px) {
+        margin-bottom: 60px;
+      }
     }
   }
   .q6LoadingDiv {
@@ -501,19 +548,43 @@ const QnaWrapper = styled.div`
     img {
       margin-top: 120px;
       width: 250px;
+      @media (max-width: 430px) {
+        width: 160px;
+        margin-top: 40px;
+      }
     }
 
     .txtDiv {
       margin-top: 40px;
       text-align: center;
       line-height: 70px;
+      @media (max-width: 430px) {
+        margin-top: 0px;
+        line-height: 30px;
+      }
       h2 {
         font-size: 40px;
         font-weight: 700;
+        @media (max-width: 430px) {
+          font-size: 28px;
+        }
       }
-      p {
-        margin-top: 90px;
+      p:first-of-type {
+        margin-top: 100px;
         font-weight: 700;
+        @media (max-width: 430px) {
+          margin-top: 80px;
+          font-size: 16px;
+        }
+      }
+      p:last-of-type {
+        margin-top: 80px;
+        font-size: 40px;
+        font-weight: 900;
+        @media (max-width: 430px) {
+          font-size: 30px;
+          margin-top: 50px;
+        }
       }
     }
   }
@@ -526,15 +597,30 @@ const QnaWrapper = styled.div`
     img {
       margin-top: 120px;
       width: 250px;
+      @media (max-width: 430px) {
+        width: 200px;
+        margin-top: 40px;
+      }
     }
     .txtDiv {
       margin-top: 20px;
       text-align: center;
       line-height: 70px;
+      @media (max-width: 430px) {
+        line-height: 25px;
+      }
       h2 {
         font-size: 44px;
         font-weight: 900;
         margin-bottom: 10px;
+        @media (max-width: 430px) {
+          font-size: 26px;
+        }
+      }
+      p {
+        @media (max-width: 430px) {
+          font-size: 20px;
+        }
       }
       span {
         font-weight: 700;
@@ -548,6 +634,11 @@ const QnaWrapper = styled.div`
       font-size: 26px;
       font-weight: 700;
       color: white;
+      @media (max-width: 430px) {
+        margin-top: 60px;
+        padding: 10px 20px;
+        font-size: 20px;
+      }
     }
   }
 `;
@@ -576,47 +667,83 @@ const OptionItem = styled.li`
   cursor: pointer;
   &:hover {
     background-color: ${(props) => (props.selected ? '#fc764a' : '#eee')};
+    @media (max-width: 430px) {
+      background-color: ${(props) => (props.selected ? '#fc764a' : 'white')};
+    }
+  }
+  @media (max-width: 430px) {
+    font-size: 14px;
+    padding: 12px;
   }
 `;
 
 //q5
 const RangeInput = styled.input`
   -webkit-appearance: none;
-  position: relative;
   width: 100%;
   height: 40px;
-  background: repeating-linear-gradient(
-    to right,
-    #000 1px,
-    transparent 1px,
-    transparent 10%
-  );
   outline: none;
-  overflow: hidden;
+  overflow: visible;
+  /* box-shadow: inset 0 0 0 3px blue; */
+  @media (max-width: 430px) {
+    height: 20px;
+  }
   &::-webkit-slider-thumb {
     -webkit-appearance: none;
-    width: 45px;
-    height: 45px;
+    width: 55px;
+    height: 55px;
+    margin-top: -7px;
     background-color: var(--main-color);
     border-radius: 50%;
     cursor: pointer;
     transition: left 1s ease-in-out;
+    @media (max-width: 430px) {
+      width: 30px;
+      height: 30px;
+      margin-top: -5px;
+    }
   }
 
   &::-webkit-slider-runnable-track {
     -webkit-appearance: none;
+    min-width: 534px;
+    /* box-shadow: 0 0 0 3px red; */
+    margin-left: -58px;
+    height: 40px;
     background: linear-gradient(
       to right,
       var(--main-color) ${({ value }) => (value / 70) * 100}%,
-      white ${({ value }) => (value / 70) * 100}%
+      transparent ${({ value }) => (value / 70) * 100}%
     );
-    min-width: 699px;
-    margin-left: -60px;
     border-radius: 40px;
+
+    /* background: repeating-linear-gradient(
+      to right,
+      #000 0,
+      #000 1px,
+      transparent 1px,
+      transparent calc(100% / 8)
+    ); */
+    background-position: center;
+    background-size: 100% 1px;
+    @media (max-width: 430px) {
+      min-width: 300px;
+      margin-left: -20px;
+      height: 20px;
+    }
   }
 `;
 const Scale = styled.div`
   display: flex;
   justify-content: space-between;
   padding: 10px 15px;
+  width: 100%;
+  margin-top: 10px;
+  font-size: 24px;
+
+  @media (max-width: 430px) {
+    padding: 5px;
+    margin-top: 5px;
+    font-size: 14px;
+  }
 `;
