@@ -94,21 +94,21 @@ const BlessingQnaResult = () => {
       content: {
         title: '덕담',
         description: message,
-        imageUrl: '이미지 URL',
-        link: {
-          mobileWebUrl: 'https://sulpport.site/blessingQnaResult',
-          webUrl: 'https://sulpport.site/blessingQnaResult',
-        },
+        // imageUrl: '이미지 URL',
+        // link: {
+        //   mobileWebUrl: 'https://sulpport.site/blessingQnaResult',
+        //   webUrl: 'https://sulpport.site/blessingQnaResult',
+        // },
       },
-      buttons: [
-        {
-          title: '웹으로 보기',
-          link: {
-            mobileWebUrl: 'https://sulpport.site/blessingQnaResult',
-            webUrl: 'https://sulpport.site/blessingQnaResult',
-          },
-        },
-      ],
+      // buttons: [
+      //   {
+      //     title: '웹으로 보기',
+      //     link: {
+      //       mobileWebUrl: 'https://sulpport.site/blessingQnaResult',
+      //       webUrl: 'https://sulpport.site/blessingQnaResult',
+      //     },
+      //   },
+      // ],
     });
     // if (selectedMessage) {
     //   window.Kakao.Link.sendDefault({
