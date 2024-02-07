@@ -141,6 +141,7 @@ const MainWrapper = styled.main`
     }
     img:first-of-type {
       width: 450px;
+      margin-left: 120px;
       display: block;
       @media (max-width: 430px) {
         width: 250px;
@@ -170,14 +171,13 @@ const IntroduceSection = styled.section`
     justify-content: center;
     align-items: center;
     text-align: center;
-    /* gap: 100px; */
+    gap: 100px;
     width: 100%;
     max-width: 1300px;
 
     @media (max-width: 430px) {
       width: 100%;
-      /* gap: 10px; */
-      justify-content: space-between;
+      gap: 10px;
     }
 
     li {
