@@ -63,16 +63,18 @@ const Carousel = () => {
 };
 export default Carousel;
 const CarouselContainer = styled.div`
+  /* box-shadow: 0 0 0 5px blue; */
   display: flex;
   overflow: auto;
   margin: 0 auto;
   scroll-snap-type: x mandatory;
   scroll-behavior: smooth;
-  width: 1300px;
+  width: 100vw;
+  max-width: 1300px;
   border-radius: 10px;
   position: relative;
-  @media (max-width: 396px) {
-    width: 396px;
+  @media (max-width: 430px) {
+    width: 100%;
     height: 200px;
   }
   /* 스크롤 바를 숨김 */
@@ -94,7 +96,8 @@ const CarouselItem = styled.div`
   justify-content: center;
   position: relative;
   border-radius: 10px;
-  @media (max-width: 396px) {
+  @media (max-width: 430px) {
+    width: 100%;
     height: 200px;
   }
 
@@ -102,7 +105,7 @@ const CarouselItem = styled.div`
     position: absolute;
     top: 50px;
     left: 40px;
-    @media (max-width: 396px) {
+    @media (max-width: 430px) {
       top: 30px;
       left: 25px;
     }
@@ -111,7 +114,7 @@ const CarouselItem = styled.div`
       font-size: 34px;
       color: white;
       margin-bottom: 30px;
-      @media (max-width: 396px) {
+      @media (max-width: 430px) {
         font-size: 18px;
         font-weight: 900;
         margin-bottom: 14px;
@@ -121,7 +124,7 @@ const CarouselItem = styled.div`
       font-size: 50px;
       color: white;
       font-weight: 900;
-      @media (max-width: 396px) {
+      @media (max-width: 430px) {
         font-size: 28px;
       }
     }
@@ -133,7 +136,7 @@ const ButtonWrapper = styled.div`
   display: flex;
   left: 60px;
   bottom: 35px;
-  @media (max-width: 396px) {
+  @media (max-width: 430px) {
     left: 30px;
     bottom: 18px;
   }
@@ -156,7 +159,7 @@ const Button = styled.button`
     scale:1.3;
     background-color: var(--main-color);
   `}
-  @media (max-width: 396px) {
+  @media (max-width: 430px) {
     width: 10px;
     height: 10px;
   }

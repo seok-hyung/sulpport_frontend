@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { styled, keyframes } from 'styled-components';
 
 const Header = () => {
@@ -49,19 +48,20 @@ export default Header;
 
 const HeaderWrapper = styled.header`
   .headerUl {
-    width: 1300px;
+    width: 100vw;
+    max-width: 1300px;
     margin: 40px auto 0 auto;
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 20px;
-    @media (max-width: 396px) {
-      width: 396px;
+    @media (max-width: 430px) {
+      width: 100%;
       padding: 10px 20px;
     }
     img {
       width: 50px;
-      @media (max-width: 396px) {
+      @media (max-width: 430px) {
         width: 30px;
       }
     }
@@ -99,7 +99,7 @@ const SearchWrapper = styled.div`
     margin-right: 40px;
     z-index: 10;
   }
-  @media (max-width: 396px) {
+  @media (max-width: 430px) {
     img {
       margin-right: 10px;
     }
@@ -121,7 +121,7 @@ const SearchInputSlideIn = styled.input`
     background-color: #ffffff;
     border: 1px solid var(--main-color);
   }
-  @media (max-width: 396px) {
+  @media (max-width: 430px) {
     font-size: 14px;
     padding: 15px 20px;
   }

@@ -19,8 +19,6 @@ const Main = () => {
         <img src="/assets/main-logo.svg" alt="메인 로고" />
         <img src="/assets/main-txt.svg" alt="메인 텍스트" />
       </section>
-      <div className="w"></div>
-      <div className="w2"></div>
       <IntroduceSection>
         <ul className="menusUl">
           <li
@@ -117,7 +115,9 @@ const Main = () => {
 export default Main;
 
 const MainWrapper = styled.main`
-  width: 1300px;
+  overflow-x: hidden;
+  width: 100vw;
+  max-width: 1300px;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
@@ -125,27 +125,24 @@ const MainWrapper = styled.main`
   align-items: center;
   font-size: 24px;
 
-  .w2 {
-    box-shadow: inset 0 0 0 3px red;
-    width: 396px;
-    height: 20px;
-  }
-  @media (max-width: 396px) {
+  @media (max-width: 430px) {
     font-size: 16px;
     width: 100%;
   }
+
   .logoNTxt {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    @media (max-width: 396px) {
-      width: 396px;
+
+    @media (max-width: 430px) {
+      width: 100%;
     }
     img:first-of-type {
       width: 450px;
       display: block;
-      @media (max-width: 396px) {
+      @media (max-width: 430px) {
         width: 250px;
         margin-left: 60px;
       }
@@ -153,7 +150,7 @@ const MainWrapper = styled.main`
     img:last-of-type {
       width: 300px;
       display: block;
-      @media (max-width: 396px) {
+      @media (max-width: 430px) {
         width: 250px;
       }
     }
@@ -161,37 +158,43 @@ const MainWrapper = styled.main`
 `;
 
 const IntroduceSection = styled.section`
+  width: 100vw;
+  max-width: 1300px;
   margin: 70px auto;
-  @media (max-width: 396px) {
+  @media (max-width: 430px) {
     margin: 30px auto;
-    width: 396px;
+    width: 100%;
   }
   .menusUl {
-    width: 1300px;
     display: flex;
     justify-content: center;
     align-items: center;
     text-align: center;
-    gap: 100px;
-    @media (max-width: 396px) {
+    /* gap: 100px; */
+    width: 100%;
+    max-width: 1300px;
+
+    @media (max-width: 430px) {
       width: 100%;
-      gap: 10px;
+      /* gap: 10px; */
+      justify-content: space-between;
     }
 
     li {
       border-radius: 20px;
       padding: 15px 40px 25px 40px;
+      width: 30%;
+      max-width: 300px;
       cursor: pointer;
-      @media (max-width: 396px) {
-        width: 120px;
-        height: 120px;
-        padding: 10px;
+
+      @media (max-width: 430px) {
+        width: 30%;
+        padding: 10px 20px;
       }
       img {
         width: 200px;
-        @media (max-width: 396px) {
+        @media (max-width: 430px) {
           width: 70px;
-          margin-top: -20px;
         }
       }
       p {
@@ -199,9 +202,9 @@ const IntroduceSection = styled.section`
         font-size: 36px;
         color: white;
         font-weight: 700;
-        @media (max-width: 396px) {
-          margin-top: -5px;
-          font-size: 16px;
+        @media (max-width: 430px) {
+          font-size: 14px;
+          margin-top: 5px;
         }
       }
     }
@@ -220,10 +223,12 @@ const IntroduceSection = styled.section`
 
 const TestSection = styled.section`
   margin-top: 70px;
-  width: 1300px;
+  width: 100vw;
+  max-width: 1300px;
   margin: 120px auto 0 auto;
-  @media (max-width: 396px) {
-    width: 396px;
+  overflow: hidden;
+  @media (max-width: 430px) {
+    width: 100%;
     margin: 40px auto 0 auto;
     padding: 0 20px;
   }
@@ -233,7 +238,7 @@ const TestSection = styled.section`
     justify-content: center;
     font-size: 36px;
     gap: 10px;
-    @media (max-width: 396px) {
+    @media (max-width: 430px) {
       justify-content: flex-start;
     }
     img {
@@ -252,7 +257,7 @@ const TestSection = styled.section`
       display: block;
       color: #37392e;
       margin: 0 auto;
-      @media (max-width: 396px) {
+      @media (max-width: 430px) {
         font-size: 20px;
       }
     }
@@ -266,7 +271,7 @@ const TestSection = styled.section`
         .title {
           width: 200px;
           height: 200px;
-          @media (max-width: 396px) {
+          @media (max-width: 430px) {
             width: 100px;
             height: 100px;
           }
@@ -277,8 +282,8 @@ const TestSection = styled.section`
           font-size: 24px;
           border-radius: 10px;
           padding: 5px 20px;
-          @media (max-width: 396px) {
-            font-size: 16px;
+          @media (max-width: 430px) {
+            font-size: 14px;
             padding: 5px 15px;
           }
         }
@@ -289,21 +294,21 @@ const TestSection = styled.section`
       border-radius: 20px;
       background: linear-gradient(to bottom, #eee 20%, rgba(25, 100, 126, 0.2) 80%);
       width: 100%;
-      @media (max-width: 396px) {
+      @media (max-width: 430px) {
         margin-bottom: 20px;
         width: 100vw;
         border-radius: 0;
-        padding: 20px;
+        padding: 25px;
       }
     }
     .blessingTestLi {
       margin-bottom: 50px;
-      @media (max-width: 396px) {
+      @media (max-width: 430px) {
         margin-bottom: 20px;
       }
       .blessingImg {
         width: 380px;
-        @media (max-width: 396px) {
+        @media (max-width: 430px) {
           width: 150px;
         }
       }
@@ -311,7 +316,7 @@ const TestSection = styled.section`
     .presentTestLi {
       .presentImg {
         width: 500px;
-        @media (max-width: 396px) {
+        @media (max-width: 430px) {
           width: 200px;
         }
       }
@@ -320,10 +325,12 @@ const TestSection = styled.section`
 `;
 
 const ChalyeSection = styled.section`
-  width: 1300px;
+  width: 100vw;
+  max-width: 1300px;
   margin: 120px auto 0 auto;
-  @media (max-width: 396px) {
-    width: 396px;
+
+  @media (max-width: 430px) {
+    width: 100%;
     padding: 0 20px;
     margin: 40px auto 0 auto;
   }
@@ -333,7 +340,7 @@ const ChalyeSection = styled.section`
     align-items: center;
     position: relative;
     margin-bottom: 40px;
-    @media (max-width: 396px) {
+    @media (max-width: 430px) {
       justify-content: flex-start;
       margin-bottom: 20px;
     }
@@ -348,19 +355,19 @@ const ChalyeSection = styled.section`
         gap: 10px;
         align-items: center;
         margin-bottom: 20px;
-        @media (max-width: 396px) {
+        @media (max-width: 430px) {
           margin-bottom: 10px;
           gap: 6px;
         }
         img {
           width: 40px;
-          @media (max-width: 396px) {
+          @media (max-width: 430px) {
             width: 30px;
           }
         }
         h2 {
           font-size: 36px;
-          @media (max-width: 396px) {
+          @media (max-width: 430px) {
             font-size: 18px;
           }
         }
@@ -375,7 +382,7 @@ const ChalyeSection = styled.section`
       height: fit-content;
       position: absolute;
       right: 0;
-      @media (max-width: 396px) {
+      @media (max-width: 430px) {
         padding: 5px 10px;
         font-size: 20px;
       }
@@ -383,81 +390,6 @@ const ChalyeSection = styled.section`
   }
 `;
 
-const CarouselWrapper = styled.div`
-  position: relative;
-`;
-
-const CarouselContainer = styled.div`
-  display: flex;
-  overflow: auto;
-  scroll-snap-type: x mandatory;
-  scroll-behavior: smooth;
-  width: 100%;
-  height: 420px;
-  gap: 20px;
-  @media (max-width: 396px) {
-    width: 396px;
-    height: 160px;
-    gap: 10px;
-  }
-
-  .circle {
-    position: absolute;
-    z-index: 100;
-    top: 50%;
-    transform: translateY(-50%);
-    cursor: pointer;
-    width: 90px;
-    height: 90px;
-    border-radius: 50%;
-    background-color: white;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: 3px solid #e9e9ec;
-    box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
-    .icon {
-      max-width: 80px;
-    }
-    @media (max-width: 396px) {
-      display: none;
-    }
-  }
-  .circle:hover {
-    background-color: #f0f0f3;
-  }
-  .circle:active {
-    background-color: white;
-  }
-  .circle.left {
-    left: -47px;
-  }
-  .circle.right {
-    right: -49px;
-  }
-`;
-
-const CarouselItem = styled.div`
-  flex: 0 0 calc(25% - 10px);
-  @media (max-width: 396px) {
-    flex: 0 0 calc(33% - 5px);
-    background-size: contain;
-    background-repeat: no-repeat;
-  }
-  scroll-snap-align: start;
-  scroll-snap-stop: always;
-  background-size: cover;
-  background-position: center;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  p {
-    color: white;
-    font-size: 24px;
-    text-align: center;
-  }
-`;
 const Carousel2 = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
@@ -543,3 +475,80 @@ const Carousel2 = () => {
     </CarouselWrapper>
   );
 };
+
+const CarouselWrapper = styled.div`
+  position: relative;
+`;
+
+const CarouselContainer = styled.div`
+  display: flex;
+  overflow: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  width: 100vw;
+  max-width: 1300px;
+  height: 420px;
+  gap: 20px;
+  @media (max-width: 430px) {
+    width: 100%;
+    height: 160px;
+    gap: 10px;
+  }
+
+  .circle {
+    position: absolute;
+    z-index: 100;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 3px solid #e9e9ec;
+    box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+    .icon {
+      max-width: 80px;
+    }
+    @media (max-width: 430px) {
+      display: none;
+    }
+  }
+  .circle:hover {
+    background-color: #f0f0f3;
+  }
+  .circle:active {
+    background-color: white;
+  }
+  .circle.left {
+    left: -47px;
+  }
+  .circle.right {
+    right: -49px;
+  }
+`;
+
+const CarouselItem = styled.div`
+  flex: 0 0 calc(25% - 15px);
+  @media (max-width: 430px) {
+    flex: 0 0 calc(33% - 5px);
+    background-size: contain;
+    background-repeat: no-repeat;
+  }
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  p {
+    color: white;
+    font-size: 24px;
+    text-align: center;
+  }
+`;
