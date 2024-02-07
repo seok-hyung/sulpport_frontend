@@ -16,6 +16,7 @@ const BlessingQnaResult = () => {
     상황: false,
     나이: false,
   });
+  // console.log(selectedMessage?.text);
 
   // 채팅 답변 받는 함수
   // const fetchServerResponse = async () => {
@@ -38,6 +39,7 @@ const BlessingQnaResult = () => {
   const [isShareActive, setIsShareActive] = useState(false);
   const [showShareButton, setShowShareButton] = useState(true);
   const [showShareOptions, setShowShareOptions] = useState(false);
+  const [message, setMessage] = useState('');
 
   const handleChatMessageClick = (msg) => {
     if (msg.sender === 'server') {
@@ -47,6 +49,7 @@ const BlessingQnaResult = () => {
       } else {
         setIsShareActive(true);
         setSelectedMessage(msg);
+        setMessage(msg?.text);
       }
     }
   };
@@ -86,15 +89,36 @@ const BlessingQnaResult = () => {
 
   // 카카오톡 공유하기
   const handleKakaoClick = () => {
-    if (selectedMessage) {
-      window.Kakao.Link.sendScrap({
-        requestIrl: ``,
-        templateId: 104152,
-        templateArgs: {
-          DESC: selectedMessage,
+    window.Kakao.Link.sendDefault({
+      objectType: 'feed',
+      content: {
+        title: '덕담',
+        description: message,
+        imageUrl: '이미지 URL',
+        link: {
+          mobileWebUrl: 'https://sulpport.site/blessingQnaResult',
+          webUrl: 'https://sulpport.site/blessingQnaResult',
         },
-      });
-    }
+      },
+      buttons: [
+        {
+          title: '웹으로 보기',
+          link: {
+            mobileWebUrl: 'https://sulpport.site/blessingQnaResult',
+            webUrl: 'https://sulpport.site/blessingQnaResult',
+          },
+        },
+      ],
+    });
+    // if (selectedMessage) {
+    //   window.Kakao.Link.sendDefault({
+    //     requestIrl: ``,
+    //     templateId: 104152,
+    //     templateArgs: {
+    //       DESC: message,
+    //     },
+    //   });
+    // }
   };
 
   // 클립보드에 복사
