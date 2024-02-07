@@ -89,36 +89,36 @@ const BlessingQnaResult = () => {
 
   // 카카오톡 공유하기
   const handleKakaoClick = () => {
-    // window.Kakao.Link.sendDefault({
-    //   objectType: 'feed',
-    //   content: {
-    //     title: '덕담',
-    //     description: message,
-    //     imageUrl: '이미지 URL',
-    //     link: {
-    //       mobileWebUrl: 'https://sulpport.site/blessingQnaResult',
-    //       webUrl: 'https://sulpport.site/blessingQnaResult',
-    //     },
-    //   },
-    //   buttons: [
-    //     {
-    //       title: '웹으로 보기',
-    //       link: {
-    //         mobileWebUrl: 'https://sulpport.site/blessingQnaResult',
-    //         webUrl: 'https://sulpport.site/blessingQnaResult',
-    //       },
-    //     },
-    //   ],
-    // });
-    if (selectedMessage) {
-      window.Kakao.Link.sendDefault({
-        requestIrl: ``,
-        templateId: 104152,
-        templateArgs: {
-          DESC: message,
+    window.Kakao.Link.sendDefault({
+      objectType: 'feed',
+      content: {
+        title: '덕담',
+        description: message,
+        imageUrl: '이미지 URL',
+        link: {
+          mobileWebUrl: 'https://sulpport.site/blessingQnaResult',
+          webUrl: 'https://sulpport.site/blessingQnaResult',
         },
-      });
-    }
+      },
+      buttons: [
+        {
+          title: '웹으로 보기',
+          link: {
+            mobileWebUrl: 'https://sulpport.site/blessingQnaResult',
+            webUrl: 'https://sulpport.site/blessingQnaResult',
+          },
+        },
+      ],
+    });
+    // if (selectedMessage) {
+    //   window.Kakao.Link.sendDefault({
+    //     requestIrl: ``,
+    //     templateId: 104152,
+    //     templateArgs: {
+    //       DESC: message,
+    //     },
+    //   });
+    // }
   };
 
   // 클립보드에 복사
