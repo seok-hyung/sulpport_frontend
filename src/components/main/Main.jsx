@@ -396,7 +396,10 @@ const Carousel2 = () => {
   const [scrollStart, setScrollStart] = useState(0);
   const infoList = informationList;
   const carouselRef = useRef();
-
+  const navigate = useNavigate();
+  const handleClick = (path) => {
+    navigate(path);
+  };
   const handleScroll = (event) => {
     const index = Math.round(
       event.target.scrollLeft / (event.target.scrollWidth / infoList.length),
@@ -459,6 +462,7 @@ const Carousel2 = () => {
           <CarouselItem
             key={item.id}
             style={{ backgroundImage: `url(${item.url})` }}
+            onClick={() => handleClick(item.path)}
           ></CarouselItem>
         ))}
 
