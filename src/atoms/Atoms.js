@@ -3,6 +3,12 @@ import { recoilPersist } from 'recoil-persist';
 
 const { persistAtom } = recoilPersist();
 
+export const blessingFormData = atom({
+  key: 'blessingFormData',
+  default: [],
+  effects_UNSTABLE: [persistAtom],
+});
+
 export const blessingNameState = atom({
   key: 'blessingNameState',
   default: '',
