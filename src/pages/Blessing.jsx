@@ -66,29 +66,28 @@ const BlessingWrapper = styled.div`
     border-bottom-left-radius: 30px;
     border-bottom-right-radius: 30px;
     img:first-of-type {
-      width: 300px;
+      width: 180px;
       @media (max-width: 430px) {
-        width: 160px;
+        width: 130px;
       }
     }
     img:last-of-type {
-      width: 400px;
-      margin: 40px auto;
+      width: 250px;
+      margin: 20px auto;
       @media (max-width: 430px) {
-        width: 250px;
-        margin: 20px auto;
+        width: 200px;
+        margin: 15px auto;
       }
     }
   }
   main {
     width: 100vw;
     max-width: 1300px;
-
     .buttons {
       display: flex;
       justify-content: center;
-      gap: 70px;
-      margin-top: 60px;
+      gap: 50px;
+      margin-top: 40px;
       @media (max-width: 430px) {
         gap: 10px;
         margin-top: 20px;
@@ -96,32 +95,32 @@ const BlessingWrapper = styled.div`
       button {
         border-radius: 15px;
         background-color: #eaeaea;
-        padding: 10px 60px;
+        padding: 10px 50px;
         display: flex;
-        font-size: 24px;
+        font-size: 20px;
 
         @media (max-width: 430px) {
-          font-size: 16px;
+          font-size: 15px;
           padding: 5px 20px;
         }
       }
     }
     .txtDiv {
       text-align: center;
-      margin: 70px auto;
+      margin: 40px auto;
 
       @media (max-width: 430px) {
         width: 100%;
         margin: 20px auto;
       }
       p {
-        font-size: 36px;
+        font-size: 24px;
         margin-bottom: 20px;
-        line-height: 50px;
+        line-height: 32px;
         @media (max-width: 430px) {
-          font-size: 20px;
+          font-size: 16px;
           margin-bottom: 10px;
-          line-height: 30px;
+          line-height: 20px;
         }
       }
       strong {
@@ -135,13 +134,13 @@ const BlessingWrapper = styled.div`
       background-color: #fc6736;
       color: white;
       font-weight: 700;
-      font-size: 32px;
+      font-size: 24px;
       display: block;
       padding: 10px 40px;
       border-radius: 10px;
-      margin: 100px auto 60px auto;
+      margin: 50px auto 40px auto;
       @media (max-width: 430px) {
-        font-size: 20px;
+        font-size: 18px;
         margin: 30px auto 20px auto;
         padding: 5px 20px;
       }
@@ -152,7 +151,6 @@ const BlessingWrapper = styled.div`
     justify-content: center;
     align-items: center;
     gap: 50px;
-    margin-bottom: 100px;
     width: 100vw;
     max-width: 1300px;
     div {
@@ -167,10 +165,10 @@ const BlessingWrapper = styled.div`
       }
     }
     img {
-      width: 60px;
+      width: 40px;
       margin-bottom: 10px;
       @media (max-width: 430px) {
-        width: 100%;
+        width: 30px;
       }
     }
   }
