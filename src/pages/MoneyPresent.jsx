@@ -65,6 +65,10 @@ export default MoneyPresent;
 
 const PresentWrapper = styled.div`
   margin: 0 auto;
+  width: 100vw;
+  @media (max-width: 430px) {
+    width: 100%;
+  }
   .topImg {
     display: flex;
     flex-direction: column;
@@ -73,35 +77,50 @@ const PresentWrapper = styled.div`
     border-bottom-left-radius: 30px;
     border-bottom-right-radius: 30px;
     img:first-of-type {
-      width: 400px;
+      width: 180px;
       margin-bottom: 20px;
+      @media (max-width: 430px) {
+        width: 130px;
+      }
     }
     img:last-of-type {
-      width: 400px;
-      padding: 30px 0;
+      width: 250px;
+      margin: 20px auto;
+      @media (max-width: 430px) {
+        width: 200px;
+        margin: 15px auto;
+      }
     }
   }
   main {
     .classifyBtns {
       display: flex;
       justify-content: center;
-      gap: 70px;
-      margin-top: 60px;
+      gap: 50px;
+      margin-top: 40px;
       button {
         border-radius: 15px;
         background-color: #eaeaea;
-        padding: 10px 60px;
+        padding: 10px 50px;
         display: flex;
-        font-size: 24px;
+        font-size: 20px;
+        @media (max-width: 430px) {
+          font-size: 15px;
+          padding: 5px 20px;
+        }
       }
     }
     .txtDiv {
       text-align: center;
-      margin: 70px auto;
+      margin: 40px auto;
+      @media (max-width: 430px) {
+        width: 100%;
+        margin: 20px auto;
+      }
       p {
-        font-size: 36px;
+        font-size: 24px;
         margin-bottom: 20px;
-        line-height: 50px;
+        line-height: 32px;
       }
       strong {
         font-weight: 700;
@@ -114,21 +133,31 @@ const PresentWrapper = styled.div`
       background-color: var(--sub-color);
       color: white;
       font-weight: 700;
-      font-size: 32px;
+      font-size: 24px;
       display: block;
       padding: 10px 40px;
       border-radius: 10px;
-      margin: 120px auto 60px auto;
+      margin: 50px auto 40px auto;
+      @media (max-width: 430px) {
+        font-size: 18px;
+        margin: 30px auto 20px auto;
+        padding: 5px 20px;
+      }
     }
     .presentBtn {
       background-color: var(--sub-color);
       color: white;
       font-weight: 700;
-      font-size: 32px;
+      font-size: 24px;
       display: block;
       padding: 10px 40px;
       border-radius: 10px;
       margin: 0px auto 50px auto;
+      @media (max-width: 430px) {
+        font-size: 18px;
+        margin: 0 auto 20px auto;
+        padding: 5px 20px;
+      }
     }
   }
   .imgs {
@@ -136,18 +165,25 @@ const PresentWrapper = styled.div`
     justify-content: center;
     align-items: center;
     gap: 50px;
-    margin-bottom: 100px;
+    width: 100vw;
+    max-width: 1300px;
     div {
-      width: 50px;
+      width: 3.125rem;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       text-align: center;
+      @media (max-width: 430px) {
+        width: 3rem;
+      }
     }
     img {
-      width: 60px;
+      width: 40px;
       margin-bottom: 10px;
+      @media (max-width: 430px) {
+        width: 30px;
+      }
     }
   }
 `;
