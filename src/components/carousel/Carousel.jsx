@@ -18,6 +18,7 @@ const Carousel = () => {
     const index = Math.round(
       event.target.scrollLeft / (event.target.scrollWidth / itemLists.length),
     );
+
     setCurrentIndex(index);
   };
   const moveToSlide = (index) => {
@@ -73,6 +74,7 @@ const Carousel = () => {
   );
 };
 export default Carousel;
+
 const CarouselWrapper = styled.div`
   position: relative;
 `;
@@ -87,12 +89,8 @@ const CarouselContainer = styled.div`
   border-radius: 10px;
   position: relative;
   @media (max-width: 430px) {
-    width: 100%;
+    width: 100vw;
     height: 200px;
-  }
-  /* 스크롤 바를 숨김 */
-  ::-webkit-scrollbar {
-    display: none;
   }
 `;
 
