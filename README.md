@@ -7,12 +7,12 @@
 
 <img width="2160" alt="Frame 362" src="https://github.com/seok-hyung/sulpport_frontend/assets/123619657/3de086f3-5ace-4c70-ab5f-693e7fb0b0f3">
 <img width="2160" alt="2_ux_백그라운드" src="https://github.com/seok-hyung/sulpport_frontend/assets/123619657/8810185f-09c7-4f94-b9f0-aeca66d7b01a">
-<br/><br/>
-배포 URL : [https://sulpport.site/](https://sulpport.site/) <br/><br/>
+<br/>
 
+배포 URL : [https://sulpport.site](https://sulpport.site) <br/><br/>
 
 ```
-// 서버 닫혀있을 시
+// 서버 닫혀있을 시 프로젝트 시작하는 법
 npm start
 ```
 
