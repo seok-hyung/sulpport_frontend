@@ -124,12 +124,10 @@ export default Sequence;
 
 const Wrapper = styled.div`
   width: 100vw;
-  max-width: 1300px;
-  margin: 0 auto;
+
   header {
     position: relative;
     width: 100%;
-    height: 500px;
     background-image: url('/assets/long3.svg');
     background-repeat: no-repeat;
     background-size: cover;
@@ -146,17 +144,16 @@ const Wrapper = styled.div`
       }
     }
     .headerContent {
-      padding: 40px 80px;
-      height: 400px;
+      padding: 30px 60px;
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
       .tag {
         width: 150px;
         background-color: rgba(255, 255, 255, 0.8);
         font-size: 26px;
         padding: 8px 16px;
         border-radius: 20px;
+        margin-bottom: 150px;
       }
       img {
         width: 40px;
