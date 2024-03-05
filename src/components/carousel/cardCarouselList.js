@@ -1,4 +1,4 @@
-export const informationList = [
+export const cardCarouselList = [
   {
     id: 1,
     url: '/assets/chalye1.svg',
