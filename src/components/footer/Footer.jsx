@@ -20,29 +20,28 @@ export default Footer;
 const FooterWrapper = styled.footer`
   width: 100vw;
   max-width: 1300px;
-  margin: 50px auto;
-  @media (max-width: 430) {
-    margin: 25px auto;
-  }
+  padding: 20px;
+  margin: auto;
   hr {
-    margin-bottom: 50px;
+    margin-bottom: 20px;
     background-color: #767676;
     border: 0;
     height: 1px;
-    @media (max-width: 430) {
-      margin-bottom: 25px;
-    }
   }
   img {
     width: 180px;
-    @media (max-width: 430) {
-      width: 80px;
+    @media (max-width: 430px) {
+      width: 140px;
     }
   }
   .footerTxtDiv {
-    margin-top: 20px;
-    font-size: 24px;
-    line-height: 30px;
+    margin-top: 10px;
+    font-size: 22px;
+    line-height: 28px;
     color: #767676;
+    @media (max-width: 430px) {
+      font-size: 18px;
+      line-height: 22px;
+    }
   }
 `;
