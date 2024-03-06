@@ -1,20 +1,25 @@
 import React, { useRef, useState } from 'react';
-import { carouselList } from './CarouselList';
 import styled from 'styled-components';
+import { mainCarouselList } from './mainCarouselList';
 
-const Carousel = () => {
+const MainCarousel = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
   const [startDrag, setStartDrag] = useState(0);
   const [scrollStart, setScrollStart] = useState(0);
-  const itemLists = carouselList;
+  const itemLists = mainCarouselList;
   const carouselRef = useRef();
 
   const handleScroll = (event) => {
-    const index = Math.round(event.target.scrollLeft / event.target.scrollWidth);
+    const index = Math.round(
+      event.target.scrollLeft / (event.target.scrollWidth / itemLists.length),
+    );
     setCurrentIndex(index);
   };
-
+  const moveToSlide = (index) => {
+    const slideWidth = carouselRef.current.scrollWidth / itemLists.length;
+    carouselRef.current.scrollLeft = slideWidth * index;
+  };
   const handleMouseDown = (e) => {
     setIsDragging(true);
     setStartDrag(e.clientX);
@@ -33,37 +38,43 @@ const Carousel = () => {
   };
 
   return (
-    <CarouselContainer
-      ref={carouselRef}
-      onScroll={handleScroll}
-      onMouseDown={handleMouseDown}
-      onMouseMove={handleMouseMove}
-      onMouseUp={handleMouseUp}
-      onMouseLeave={handleMouseUp}
-    >
-      {itemLists.map((item) => (
-        <CarouselItem key={item.id} style={{ backgroundImage: `url(${item.url})` }}>
-          <dic className="txtDiv">
-            <small>{item.tags}</small>
-            <p>{item.txt}</p>
-          </dic>
-        </CarouselItem>
-      ))}
+    <CarouselWrapper>
+      <CarouselContainer
+        ref={carouselRef}
+        onScroll={handleScroll}
+        onMouseDown={handleMouseDown}
+        onMouseMove={handleMouseMove}
+        onMouseUp={handleMouseUp}
+        onMouseLeave={handleMouseUp}
+      >
+        {itemLists.map((item) => (
+          <CarouselItem key={item.id} style={{ backgroundImage: `url(${item.url})` }}>
+            <dic className="txtDiv">
+              <small>{item.tags}</small>
+              <p>{item.txt}</p>
+            </dic>
+          </CarouselItem>
+        ))}
+      </CarouselContainer>
       <ButtonWrapper>
         {itemLists.map((_, index) => (
           <Button
             key={index}
-            onClick={() => setCurrentIndex(index)}
+            onClick={() => moveToSlide(index)}
             active={index === currentIndex}
+            aria-label={`슬라이드 ${index + 1}`}
           />
         ))}
       </ButtonWrapper>
-    </CarouselContainer>
+    </CarouselWrapper>
   );
 };
-export default Carousel;
+export default MainCarousel;
+
+const CarouselWrapper = styled.div`
+  position: relative;
+`;
 const CarouselContainer = styled.div`
-  /* box-shadow: 0 0 0 5px blue; */
   display: flex;
   overflow: auto;
   margin: 0 auto;
@@ -74,12 +85,8 @@ const CarouselContainer = styled.div`
   border-radius: 10px;
   position: relative;
   @media (max-width: 430px) {
-    width: 100%;
+    width: 100vw;
     height: 200px;
-  }
-  /* 스크롤 바를 숨김 */
-  ::-webkit-scrollbar {
-    display: none;
   }
 `;
 

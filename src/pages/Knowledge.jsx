@@ -118,7 +118,7 @@ const Wrapper = styled.div`
       display: inline-block;
     }
     select {
-      appearance: none; /* 기본 브라우저 스타일링을 제거합니다. */
+      appearance: none; /* 기본 브라우저 스타일링을 제거 */
       background: transparent;
       padding: 15px 30px;
       font-size: 24px;
