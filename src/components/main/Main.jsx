@@ -1,9 +1,9 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import { styled } from 'styled-components';
-import Carousel from '../carousel/Carousel';
 import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
-import { informationList } from './informationList';
+
+import CardCarousel from '../carousel/CardCarousel';
+import MainCarousel from '../carousel/MainCarousel';
 
 const Main = () => {
   const navitgate = useNavigate();
@@ -13,44 +13,32 @@ const Main = () => {
   const moveToMoneyPresent = () => {
     navitgate('/moneyPresent');
   };
+  const moveToKnowledge = () => {
+    navitgate('/knowledge');
+  };
   return (
     <MainWrapper>
       <section className="logoNTxt">
-        <img src="/assets/main-logo.svg" alt="메인 로고" />
+        <img src="/assets/main-logo.webp" alt="메인 로고" />
         <img src="/assets/main-txt.svg" alt="메인 텍스트" />
       </section>
       <IntroduceSection>
         <ul className="menusUl">
-          <li
-            className="blessing"
-            onClick={() => {
-              navitgate('/blessing');
-            }}
-          >
-            <img src="/assets/logo-pocket.svg" alt="로고 이미지" />
+          <li className="blessing" onClick={moveToBlessing}>
+            <img src="/assets/logo-pocket.webp" alt="로고 이미지" />
             <p>덕담 가이드</p>
           </li>
-          <li
-            className="present"
-            onClick={() => {
-              navitgate('/moneyPresent');
-            }}
-          >
-            <img src="/assets/present.svg" alt="선물 이미지" />
+          <li className="present" onClick={moveToMoneyPresent}>
+            <img src="/assets/present.webp" alt="선물 이미지" />
             <p>용돈/선물 추천</p>
           </li>
-          <li
-            className="informtion"
-            onClick={() => {
-              navitgate('/knowledge');
-            }}
-          >
-            <img src="/assets/dictionary-icon.svg" alt="사전 이미지" />
+          <li className="informtion" onClick={moveToKnowledge}>
+            <img src="/assets/dictionary-icon.webp" alt="사전 이미지" />
             <p>설날 상식백과</p>
           </li>
         </ul>
       </IntroduceSection>
-      <Carousel />
+      <MainCarousel />
       <TestSection>
         <h2>
           <img src="/assets/logo-circle-orange.svg" alt="원모양 로고" />
@@ -106,7 +94,7 @@ const Main = () => {
             더보기
           </button>
         </div>
-        <Carousel2 />
+        <CardCarousel />
       </ChalyeSection>
     </MainWrapper>
   );
@@ -118,10 +106,6 @@ const MainWrapper = styled.main`
   width: 100vw;
   max-width: 1300px;
   margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
   font-size: 24px;
 
   @media (max-width: 430px) {
@@ -132,35 +116,29 @@ const MainWrapper = styled.main`
   .logoNTxt {
     display: flex;
     flex-direction: column;
-    align-items: center;
     justify-content: center;
-
-    @media (max-width: 430px) {
-      width: 100%;
-    }
+    align-items: center;
     img:first-of-type {
-      width: 450px;
-      margin-left: 120px;
-      display: block;
+      width: 250px;
+      margin-left: 30px;
+      margin-bottom: 10px;
       @media (max-width: 430px) {
-        width: 250px;
-        margin-left: 60px;
+        width: 160px;
       }
     }
     img:last-of-type {
       width: 300px;
-      display: block;
       @media (max-width: 430px) {
-        width: 250px;
+        width: 200px;
       }
     }
   }
 `;
 
 const IntroduceSection = styled.section`
-  width: 100vw;
+  width: 100%;
   max-width: 1300px;
-  margin: 70px auto;
+  margin: 40px auto;
   @media (max-width: 430px) {
     margin: 30px auto;
     width: 100%;
@@ -170,44 +148,41 @@ const IntroduceSection = styled.section`
     justify-content: center;
     align-items: center;
     text-align: center;
-    gap: 100px;
+    gap: 60px;
     width: 100%;
     max-width: 1300px;
-
     @media (max-width: 430px) {
-      width: 100%;
       gap: 10px;
     }
 
     li {
+      width: 25%;
+      min-width: 260px;
       border-radius: 20px;
-      padding: 15px 40px 25px 40px;
-      width: 30%;
-      max-width: 300px;
       cursor: pointer;
 
       @media (max-width: 430px) {
         width: 30%;
-        padding: 10px 20px;
+        min-width: 0;
       }
       img {
-        width: 200px;
+        width: 150px;
+        height: 150px;
         @media (max-width: 430px) {
           width: 70px;
         }
       }
       p {
-        margin-top: 20px;
-        font-size: 36px;
+        margin: 20px auto;
+        font-size: 30px;
         color: white;
         font-weight: 700;
         @media (max-width: 430px) {
           font-size: 14px;
-          margin-top: 5px;
+          margin: 10px auto;
         }
       }
     }
-
     .blessing {
       background-color: var(--main-color);
     }
@@ -221,36 +196,38 @@ const IntroduceSection = styled.section`
 `;
 
 const TestSection = styled.section`
-  margin-top: 70px;
   width: 100vw;
   max-width: 1300px;
-  margin: 120px auto 0 auto;
+  margin: 70px auto 0 auto;
   overflow: hidden;
   @media (max-width: 430px) {
     width: 100%;
-    margin: 40px auto 0 auto;
-    padding: 0 20px;
+    margin: 30px auto 0 auto;
   }
   h2 {
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 36px;
-    gap: 10px;
+    font-size: 30px;
+    gap: 5px;
+    margin-bottom: 30px;
     @media (max-width: 430px) {
       justify-content: flex-start;
+      font-size: 20px;
+      margin-bottom: 10px;
     }
     img {
       width: 40px;
+      @media (max-width: 430px) {
+        width: 25px;
+      }
     }
-    font-size: 28px;
   }
   .testUl {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin-top: 30px;
     .tags {
       font-size: 30px;
       display: block;
@@ -386,172 +363,5 @@ const ChalyeSection = styled.section`
         font-size: 20px;
       }
     }
-  }
-`;
-
-const Carousel2 = () => {
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [isDragging, setIsDragging] = useState(false);
-  const [startDrag, setStartDrag] = useState(0);
-  const [scrollStart, setScrollStart] = useState(0);
-  const infoList = informationList;
-  const carouselRef = useRef();
-  const navigate = useNavigate();
-  const handleClick = (path) => {
-    navigate(path);
-  };
-  const handleScroll = (event) => {
-    const index = Math.round(
-      event.target.scrollLeft / (event.target.scrollWidth / infoList.length),
-    );
-    setCurrentIndex(index);
-  };
-
-  const handleMouseDown = (e) => {
-    setIsDragging(true);
-    setStartDrag(e.clientX);
-    setScrollStart(carouselRef.current.scrollLeft);
-  };
-
-  const handleMouseMove = (e) => {
-    if (!isDragging) return;
-    e.preventDefault();
-    const scrollLeft = scrollStart - (e.clientX - startDrag);
-    carouselRef.current.scrollLeft = scrollLeft;
-  };
-
-  const handleMouseUp = () => {
-    setIsDragging(false);
-  };
-
-  const handlePrevClick = () => {
-    if (currentIndex >= 0) {
-      setCurrentIndex(currentIndex - 4);
-      carouselRef.current.scrollLeft =
-        (carouselRef.current.scrollWidth / infoList.length) * (currentIndex - 4);
-    }
-  };
-
-  const handleNextClick = () => {
-    if (currentIndex < infoList.length - 4) {
-      setCurrentIndex(currentIndex + 4);
-      carouselRef.current.scrollLeft =
-        (carouselRef.current.scrollWidth / infoList.length) * (currentIndex + 4);
-    }
-  };
-
-  return (
-    <CarouselWrapper>
-      <CarouselContainer
-        ref={carouselRef}
-        onScroll={handleScroll}
-        onMouseDown={handleMouseDown}
-        onMouseMove={handleMouseMove}
-        onMouseUp={handleMouseUp}
-        onMouseLeave={handleMouseUp}
-      >
-        <div className="circle left">
-          <img
-            className="icon"
-            onClick={handlePrevClick}
-            src="/assets/chevron-left.svg"
-            alt="좌측 이동 화살표"
-          />
-        </div>
-        {infoList.map((item) => (
-          <CarouselItem
-            key={item.id}
-            style={{ backgroundImage: `url(${item.url})` }}
-            onClick={() => handleClick(item.path)}
-          ></CarouselItem>
-        ))}
-
-        <div className="circle right">
-          <img
-            className="icon"
-            onClick={handleNextClick}
-            src="/assets/chevron-right.svg"
-            alt="우측 이동 화살표"
-          />
-        </div>
-      </CarouselContainer>
-    </CarouselWrapper>
-  );
-};
-
-const CarouselWrapper = styled.div`
-  position: relative;
-`;
-
-const CarouselContainer = styled.div`
-  display: flex;
-  overflow: auto;
-  scroll-snap-type: x mandatory;
-  scroll-behavior: smooth;
-  width: 100vw;
-  max-width: 1300px;
-  height: 420px;
-  gap: 20px;
-  @media (max-width: 430px) {
-    width: 100%;
-    height: 160px;
-    gap: 10px;
-  }
-
-  .circle {
-    position: absolute;
-    z-index: 100;
-    top: 50%;
-    transform: translateY(-50%);
-    cursor: pointer;
-    width: 90px;
-    height: 90px;
-    border-radius: 50%;
-    background-color: white;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: 3px solid #e9e9ec;
-    box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
-    .icon {
-      max-width: 80px;
-    }
-    @media (max-width: 430px) {
-      display: none;
-    }
-  }
-  .circle:hover {
-    background-color: #f0f0f3;
-  }
-  .circle:active {
-    background-color: white;
-  }
-  .circle.left {
-    left: -47px;
-  }
-  .circle.right {
-    right: -49px;
-  }
-`;
-
-const CarouselItem = styled.div`
-  flex: 0 0 calc(25% - 15px);
-  @media (max-width: 430px) {
-    flex: 0 0 calc(33% - 5px);
-    background-size: contain;
-    background-repeat: no-repeat;
-  }
-  scroll-snap-align: start;
-  scroll-snap-stop: always;
-  background-size: cover;
-  background-position: center;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  p {
-    color: white;
-    font-size: 24px;
-    text-align: center;
   }
 `;
