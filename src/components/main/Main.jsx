@@ -170,6 +170,7 @@ const IntroduceSection = styled.section`
         height: 150px;
         @media (max-width: 430px) {
           width: 70px;
+          height: 70px;
         }
       }
       p {
@@ -184,10 +185,12 @@ const IntroduceSection = styled.section`
       }
     }
     .blessing {
-      background-color: var(--main-color);
+      /* background-color: var(--main-color); */
+      background-color: #e0561c;
     }
     .present {
-      background-color: var(--sub-color);
+      /* background-color: var(--sub-color); */
+      background-color: #2c8c8c;
     }
     .informtion {
       background-color: #37392e;

@@ -26,7 +26,7 @@ const Header = () => {
             placeholder="검색할 단어를 입력해주세요."
             onChange={handleSearchInput}
             value={searchValue}
-            isOpen={isInputOpen}
+            $isOpen={isInputOpen}
           />
           <img src={searchIcon} alt="검색 이미지" onClick={handleSearchClick} />
         </SearchWrapper>
@@ -111,18 +111,16 @@ const SearchInput = styled.input`
   outline: none;
   background-color: #f2f2f2;
   font-size: 20px;
-  transform: scaleX(${(props) => (props.isOpen ? '1' : '0')});
+  transform: scaleX(${(props) => (props.$isOpen ? '1' : '0')});
   transform-origin: right;
-  animation: ${(props) => (props.isOpen ? slideIn : slideOut)} 0.5s forwards ease-out;
+  animation: ${(props) => (props.$isOpen ? slideIn : slideOut)} 0.5s forwards ease-out;
 
-  // width와 visibility는 상태변경시 레이아웃의 크기를 변경하므로 대규모 레이아웃 변경을 유발할 수 있다. transform을 사용하면 레이아웃 변경이 일어나지 않는다!
-  /* width: ${(props) => (props.isOpen ? '100%' : '0')}; */
-  /* visibility: ${(props) => (props.isOpen ? 'visible' : 'hidden')};*/
   &:focus {
     background-color: #ffffff;
     border: 1px solid var(--main-color);
   }
   @media (max-width: 430px) {
+    width: calc(100% - 30px);
     font-size: 14px;
     padding: 15px 20px;
   }
