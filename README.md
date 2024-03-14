@@ -27,6 +27,8 @@ npm start
 - React
 - styled-components
 - Recoil
+- ESLint, Prettier
+- Slack
 
 ## 와이어프레임
 <img width="2160" alt="6_ux_wireframe" src="https://github.com/seok-hyung/sulpport_frontend/assets/123619657/cb539309-4007-4fe8-84ab-cf2a929ae77c">
